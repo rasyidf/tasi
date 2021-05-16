@@ -1,5 +1,5 @@
 <template>
-  <div>manufacture</div>
+  <div class="container">Manufacture</div>
 </template>
 
 <script>

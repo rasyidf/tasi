@@ -1,9 +1,7 @@
 <template>
   <div class="container">
-    <div>
-      <h1 class="title">TASI</h1>
-      <h2 class="subtitle">ya intinya itulah</h2>
-    </div>
+    <h3 class="title">TASI</h3>
+    <h4 class="subtitle">ya intinya itulah</h4>
   </div>
 </template>
 

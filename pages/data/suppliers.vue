@@ -1,5 +1,5 @@
 <template>
-  <div>Suppliers</div>
+  <div class="container">Suppliers</div>
 </template>
 
 <script>
