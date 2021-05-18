@@ -11,7 +11,7 @@
         <el-table-column label="Barcode" width="100">
           <template slot-scope="scope">
             <el-popover trigger="hover" placement="bottom">
-              <VueBarcode :value="scope.row.barcode" />
+              <VueBarcode :value="scope.row.Barcode" />
               <div slot="reference" class="name-wrapper">
                 <el-tag size="medium">{{ scope.row.Barcode }}</el-tag>
               </div>
@@ -85,8 +85,10 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      // eslint-disable-next-line no-console
-      console.log(index, row)
+      this.$message({
+        message: 'Edited.',
+        type: 'success',
+      })
     },
     handleDelete(index, row) {
       this.$message({
@@ -95,9 +97,10 @@ export default {
       })
     },
     handleAdd(index, row) {
-      this.loading = true
-      this.$store.commit('products/fetchAllProducts', null)
-      this.loading = false
+      this.$message({
+        message: 'Added.',
+        type: 'success',
+      })
     },
   },
 }
