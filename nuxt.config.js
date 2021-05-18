@@ -24,7 +24,6 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
   ],
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxtjs/auth-next'],
 
@@ -34,7 +33,8 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en',
+      lang: 'id',
+      theme_color: '#FFFFFF',
     },
   },
 
@@ -44,27 +44,34 @@ export default {
   },
   router: {
     linkExactActiveClass: 'active',
+    // middleware: ['auth'],
   },
-  auth: {
-    strategies: {
-      local: {
-        token: {
-          property: 'token',
-          // required: true,
-          // type: 'Bearer'
-        },
-        user: {
-          property: 'user',
-          // autoFetch: true
-        },
-        endpoints: {
-          login: { url: '/api/auth/login', method: 'post' },
-          logout: { url: '/api/auth/logout', method: 'post' },
-          user: { url: '/api/auth/user', method: 'get' },
+  // auth: {
+  //   strategies: {
+  //     local: {
+  //       token: {
+  //         property: 'result.accessToken',
+  //         // required: true,
+  //         type: 'Bearer',
+  //         maxAge: 1800,
+  //       },
+  //       user: {
+  //         property: 'result',
+  //       },
+  //       endpoints: {
+  //         login: {
+  //           url: 'https://localhost:44327/api/users/authenticate',
+  //           method: 'post',
+  //         },
+  //         user: {
+  //           url: 'https://localhost:44327/api/users/profile',
+  //           method: 'get',
+  //         },
+  //         logout: false,
 
-          home: '/',
-        },
-      },
-    },
-  },
+  //         home: '/',
+  //       },
+  //     },
+  //   },
+  // },
 }

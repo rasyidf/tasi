@@ -11,10 +11,10 @@ export default {
   computed: {
     ChildName() {
       switch (this.$route.name) {
+        case 'op-orders':
+          return 'Pesanan'
         case 'op-manufacture':
           return 'Manufaktur'
-        case 'op-suppliers':
-          return 'Suppliers'
         default:
           return this.$route.name
       }

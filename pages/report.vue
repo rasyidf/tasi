@@ -19,6 +19,8 @@ export default {
           return 'Items Reports'
         case 'report-manufacture':
           return 'Manufaktur'
+        case 'report-stocks':
+          return 'Stok Barang'
         default:
           return this.$route.name
       }
@@ -33,3 +35,13 @@ export default {
   },
 }
 </script>
+
+<style>
+.main_content {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  height: 80vh;
+  background: url('/empty.png') no-repeat center 50% / 80%;
+}
+</style>

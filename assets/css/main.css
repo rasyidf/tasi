@@ -13,3 +13,7 @@ html {
 .container {
   margin: 1em;
 }
+
+.p-0 {
+  padding: 0;
+}

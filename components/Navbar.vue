@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card" shadow="always">
+  <el-card class="main_navbar p-0" shadow="always">
     <el-menu
       :default-active="$route.path"
       class="el-menu-demo"
@@ -32,6 +32,17 @@
       </el-submenu>
       <el-menu-item index="/tentang">Tentang</el-menu-item>
     </el-menu>
+    <div class="avatar">
+      <el-dropdown @command="handleProfileButton">
+        <span class="el-dropdown-link">
+          <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>Profile</el-dropdown-item>
+          <el-dropdown-item command="logout">Log Out</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </el-card>
 </template>
 
@@ -43,12 +54,29 @@ export default {
         path: index,
       })
     },
+    handleProfileButton(command) {
+      switch (command) {
+        case 'logout':
+          this.$auth.logout()
+          this.$router.push('/')
+          break
+
+        default:
+          break
+      }
+    },
   },
 }
 </script>
 
 <style>
-.el-card__body {
-  padding: 0;
+.main_navbar .avatar {
+  padding-top: 0.8em;
+  padding-right: 0.8em;
+}
+.main_navbar .el-card__body {
+  padding: 0 !important;
+  display: flex;
+  justify-content: space-between;
 }
 </style>

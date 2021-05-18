@@ -1,9 +1,7 @@
 <template>
-  <div>manufacture</div>
+  <div class="main_content"></div>
 </template>
 
 <script>
 export default {}
 </script>
-
-<style></style>

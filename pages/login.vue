@@ -6,7 +6,6 @@
         You have to login before accessing to
         <strong>{{ $auth.$state.redirect }}</strong>
       </el-alert>
-      <busy-overlay />
       <el-form @keydown.enter="login">
         <el-form-item>
           <el-input
@@ -68,31 +67,39 @@ export default {
           .replace(/:/g, ': ')
           .replace(/,/g, ' ')})`
       }
-      if (msg !== '') {
-        const h = this.$createElement
-
-        this.$notify({
-          title: 'Title',
-          message: h('i', { style: 'color: teal' }, msg),
-          duration: 0,
-        })
-      }
       return msg
     },
   },
   methods: {
-    login() {
+    async login() {
       this.error = null
-      return this.$auth
-        .loginWith('local', {
+      try {
+        const response = await this.$auth.loginWith('local', {
           data: {
             username: this.username,
             password: this.password,
           },
         })
-        .catch((err) => {
-          this.error = err.response?.data
+
+        this.$auth.setUser(response)
+        // eslint-disable-next-line no-console
+        console.log(this.$auth.user)
+        this.$message({
+          title: 'Logged In',
+          message: "You're now logged in, redirecting to main site",
+          duration: 3000,
+          type: 'success',
         })
+        this.$router.push('/')
+      } catch (err) {
+        this.error = err
+        this.$message({
+          title: 'Error',
+          message: this.error,
+          duration: 3000,
+          type: 'error',
+        })
+      }
     },
   },
 }
@@ -105,11 +112,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.login-box {
+.flex .login-box {
   min-width: 30%;
   max-width: 50%;
 }
-.title {
+.flex .title {
   font-family: sans-serif;
   font-size: 16px;
   font-weight: bold;

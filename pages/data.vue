@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <el-page-header :content="ChildName" @back="goBack"> </el-page-header>
-
     <NuxtChild />
   </div>
 </template>
@@ -31,3 +30,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.el-card__body {
+  padding: 0;
+}
+</style>
