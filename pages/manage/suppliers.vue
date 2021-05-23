@@ -2,7 +2,7 @@
   <div class="container">
     <el-card class="p-0">
       <el-table v-loading="isLoading" :data="suppliers" style="width: 100%">
-        <el-table-column label="Date" width="150">
+        <el-table-column label="Date" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.ModifiedDate }}</span>

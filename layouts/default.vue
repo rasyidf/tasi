@@ -1,16 +1,18 @@
 <template>
-  <el-container>
-    <el-header>
+  <el-container class="main-container">
+    <el-header class="main-header">
       <Navbar />
     </el-header>
     <el-container>
-      <el-main> <Nuxt /></el-main>
-      <el-footer><span> Copyright &copy; 2021, UNPAK</span></el-footer>
+      <el-main class="main-item"> <Nuxt /></el-main>
+      <el-footer class="main-footer">
+        <span> Copyright &copy; 2021, UNPAK</span>
+      </el-footer>
     </el-container>
   </el-container>
 </template>
 
-<style>
+<style lang="scss">
 html {
   font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
@@ -20,14 +22,13 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
-
-.el-header {
+.main-header {
   padding: 0;
 }
-.el-main {
-  min-height: calc(100vh - 160px);
+.main-item {
+  min-height: calc(100vh - 120px);
 }
-.el-footer {
+.main-footer {
   display: flex;
   align-items: center;
   justify-content: center;

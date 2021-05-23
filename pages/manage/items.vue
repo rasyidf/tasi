@@ -2,13 +2,13 @@
   <div class="container">
     <el-card class="p-0">
       <el-table v-loading="isLoading" :data="products" style="width: 100%">
-        <el-table-column label="Date" width="150">
+        <el-table-column label="Date" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.ModifiedDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Barcode" width="100">
+        <el-table-column label="Barcode" width="130">
           <template slot-scope="scope">
             <el-popover trigger="hover" placement="bottom">
               <VueBarcode :value="scope.row.Barcode" />
