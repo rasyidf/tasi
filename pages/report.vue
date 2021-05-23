@@ -38,10 +38,11 @@ export default {
 
 <style>
 .main_content {
+  padding: 0;
+  height: calc(100vh - 216px);
   display: flex;
   align-content: center;
   justify-content: center;
-  height: 80vh;
-  background: url('/empty.png') no-repeat center 50% / 80%;
+  background: url('/empty.png') no-repeat center;
 }
 </style>

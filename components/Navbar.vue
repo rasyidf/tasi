@@ -7,16 +7,16 @@
       @select="menuSelect"
     >
       <el-menu-item index="/">Beranda</el-menu-item>
-      <el-submenu index="/data">
+      <el-submenu index="/manage">
         <template slot="title">Manajemen</template>
-        <el-menu-item index="/data/items">Barang</el-menu-item>
-        <el-menu-item index="/data/suppliers">Supplier</el-menu-item>
-        <el-menu-item index="/data/users">Pengguna</el-menu-item>
+        <el-menu-item index="/manage/items">Barang</el-menu-item>
+        <el-menu-item index="/manage/suppliers">Supplier</el-menu-item>
+        <el-menu-item index="/manage/users">Pengguna</el-menu-item>
       </el-submenu>
-      <el-submenu index="/op">
+      <el-submenu index="/ops">
         <template slot="title">Operasional</template>
-        <el-menu-item index="/op/orders">Pesanan</el-menu-item>
-        <el-menu-item index="/op/manufacture">Manufaktur</el-menu-item>
+        <el-menu-item index="/ops/orders">Pesanan</el-menu-item>
+        <el-menu-item index="/ops/manufacture">Manufaktur</el-menu-item>
       </el-submenu>
       <el-submenu index="/report">
         <template slot="title">Laporan</template>
@@ -30,7 +30,7 @@
           >Audit Supplier</el-menu-item
         >
       </el-submenu>
-      <el-menu-item index="/tentang">Tentang</el-menu-item>
+      <el-menu-item index="/about">Tentang</el-menu-item>
     </el-menu>
     <div class="avatar">
       <el-dropdown @command="handleProfileButton">
@@ -70,6 +70,9 @@ export default {
 </script>
 
 <style>
+.main_navbar {
+  border-bottom: solid 1px #e6e6e6;
+}
 .main_navbar .avatar {
   padding-top: 0.8em;
   padding-right: 0.8em;
@@ -78,5 +81,8 @@ export default {
   padding: 0 !important;
   display: flex;
   justify-content: space-between;
+}
+.el-menu.el-menu--horizontal {
+  border-bottom: none;
 }
 </style>

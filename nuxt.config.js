@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'tasi',
+    title: 'TASI',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -36,6 +36,12 @@ export default {
       lang: 'id',
       theme_color: '#FFFFFF',
     },
+  },
+
+  loadingIndicator: {
+    name: 'folding-cube',
+    color: '#3B8070',
+    background: 'white',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

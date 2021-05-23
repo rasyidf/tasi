@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <el-card class="p-0">
-      <el-table v-loading="isLoading" :data="products" style="width: 100%">
+      <el-table v-loading="isLoading" :data="suppliers" style="width: 100%">
         <el-table-column label="Date" width="150">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>

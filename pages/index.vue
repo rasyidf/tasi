@@ -3,7 +3,7 @@
     <h3>Manajemen</h3>
     <el-row :gutter="20">
       <el-col :span="8">
-        <nuxt-link to="data/items">
+        <nuxt-link to="manage/items">
           <el-button icon="el-icon-takeaway-box">
             <div class="content">
               <span class="head"> Barang</span>
@@ -13,7 +13,7 @@
         </nuxt-link>
       </el-col>
       <el-col :span="8">
-        <nuxt-link to="data/suppliers">
+        <nuxt-link to="manage/suppliers">
           <el-button icon="el-icon-truck">
             <div class="content">
               <span class="head"> Supplier</span>
@@ -23,7 +23,7 @@
         </nuxt-link>
       </el-col>
       <el-col :span="8">
-        <nuxt-link to="data/users">
+        <nuxt-link to="manage/users">
           <el-button icon="el-icon-user">
             <div class="content">
               <span class="head"> Pengguna</span>
@@ -36,7 +36,7 @@
     <h3>Operasional</h3>
     <el-row :gutter="20">
       <el-col :span="12">
-        <nuxt-link to="op/orders">
+        <nuxt-link to="ops/orders">
           <el-button icon="el-icon-shopping-cart-full">
             <div class="content">
               <span class="head"> Pesanan</span>
@@ -46,7 +46,7 @@
         </nuxt-link>
       </el-col>
       <el-col :span="12">
-        <nuxt-link to="op/manufacture">
+        <nuxt-link to="ops/manufacture">
           <el-button icon="el-icon-box">
             <div class="content">
               <span class="head"> Manufaktur</span>
