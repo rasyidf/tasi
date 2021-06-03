@@ -57,13 +57,16 @@ export default {
     handleProfileButton(command) {
       switch (command) {
         case 'logout':
-          this.$auth.logout()
-          this.$router.push('/')
+          this.logout()
           break
 
         default:
           break
       }
+    },
+    async logout() {
+      await this.$auth.logout()
+      this.$router.push('/login')
     },
   },
 }

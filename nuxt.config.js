@@ -9,12 +9,13 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+  ssr: false,
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: ['element-ui/lib/theme-chalk/index.css', '@/assets/css/main.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/element-ui', '@/plugins/vue-data-table'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -50,34 +51,34 @@ export default {
   },
   router: {
     linkExactActiveClass: 'active',
-    // middleware: ['auth'],
+    middleware: ['auth'],
   },
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       token: {
-  //         property: 'result.accessToken',
-  //         // required: true,
-  //         type: 'Bearer',
-  //         maxAge: 1800,
-  //       },
-  //       user: {
-  //         property: 'result',
-  //       },
-  //       endpoints: {
-  //         login: {
-  //           url: 'https://localhost:44327/api/users/authenticate',
-  //           method: 'post',
-  //         },
-  //         user: {
-  //           url: 'https://localhost:44327/api/users/profile',
-  //           method: 'get',
-  //         },
-  //         logout: false,
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'data.accessToken',
+          required: true,
+          type: 'Bearer',
+          maxAge: 1800,
+        },
+        user: {
+          property: 'data',
+        },
+        endpoints: {
+          login: {
+            url: 'https://tasi-backend.azurewebsites.net/api/users/login',
+            method: 'post',
+          },
+          user: {
+            url: 'https://tasi-backend.azurewebsites.net/api/users/profile',
+            method: 'get',
+          },
+          logout: false,
 
-  //         home: '/',
-  //       },
-  //     },
-  //   },
-  // },
+          home: '/',
+        },
+      },
+    },
+  },
 }

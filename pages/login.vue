@@ -2,10 +2,14 @@
   <div class="flex">
     <el-card class="login-box">
       <p class="title">Login</p>
-      <el-alert v-if="$auth.$state.redirect" show>
+      <el-tag
+        v-if="$auth.$state.redirect"
+        style="margin-bottom: 16px"
+        type="warning"
+      >
         You have to login before accessing to
         <strong>{{ $auth.$state.redirect }}</strong>
-      </el-alert>
+      </el-tag>
       <el-form @keydown.enter="login">
         <el-form-item>
           <el-input
@@ -24,7 +28,14 @@
         </el-form-item>
 
         <div class="text-center">
-          <el-button variant="primary" block @click="login"> Login </el-button>
+          <el-button
+            type="primary"
+            autofocus
+            style="width: 100%"
+            @click="login"
+          >
+            Sign In
+          </el-button>
         </div>
       </el-form>
     </el-card>
@@ -111,9 +122,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #293146;
 }
 .flex .login-box {
-  min-width: 30%;
+  min-width: 40%;
   max-width: 50%;
 }
 .flex .title {
@@ -121,5 +133,8 @@ export default {
   font-size: 16px;
   font-weight: bold;
   align-self: center;
+}
+.el-card__body {
+  padding: 20px !important;
 }
 </style>

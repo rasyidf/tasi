@@ -36,4 +36,10 @@ html {
   text-align: center;
   color: white;
 }
+.main-container {
+  background-color: #dbdbdb imp !important;
+}
+.el-main {
+  padding: 8px;
+}
 </style>

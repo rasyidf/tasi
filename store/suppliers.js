@@ -1,4 +1,18 @@
-import createCRUDModule from 'vuex-crud'
+import createCRUDModule, { client } from 'vuex-crud'
+
+client.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem('auth._token.local')
+    config.headers = {
+      Authorization: token || '',
+    }
+    return config
+  },
+  function (error) {
+    // Do something with request error
+    return Promise.reject(error)
+  }
+)
 
 const crudModule = createCRUDModule({
   resource: 'suppliers',
@@ -6,7 +20,6 @@ const crudModule = createCRUDModule({
 
   parseList(res) {
     const data = res.data
-
     return Object.assign({}, res, {
       data, // retrieve array from the json response
     })

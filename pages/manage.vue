@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  layout: 'default',
   computed: {
     ChildName() {
       switch (this.$route.name) {
