@@ -11,10 +11,12 @@
         </el-col>
         <el-col :span="18"
           ><el-input
-            value=""
+            v-model="value"
+            type="text"
             size="medium"
             placeholder="Tulis Sesuatu"
             prefix-icon="el-icon-search"
+            @input="$emit('queryChanged', value)"
           >
           </el-input>
         </el-col>

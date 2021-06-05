@@ -3,21 +3,21 @@
     v-if="currentProducts"
     ref="ruleForm"
     style="margin-left: 8px; margin-right: 32px"
-    :model="currentProducts"
+    :model="ruleForm"
     :rules="rules"
     label-width="130px"
   >
     <el-form-item label="Barcode" prop="barcode">
-      <el-input v-model="currentProducts.barcode"></el-input>
+      <el-input v-model="ruleForm.barcode"></el-input>
     </el-form-item>
     <el-form-item label="Product name" prop="name">
-      <el-input v-model="currentProducts.name"></el-input>
+      <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
     <el-form-item label="Manufactured" prop="canManufacture">
-      <el-switch v-model="currentProducts.canManufacture"></el-switch>
+      <el-switch v-model="ruleForm.canManufacture"></el-switch>
     </el-form-item>
     <el-form-item label="Unit" prop="unit">
-      <el-radio-group v-model="currentProducts.unit">
+      <el-radio-group v-model="ruleForm.unit">
         <el-radio-button label="Piece" name="unit"></el-radio-button>
         <el-radio-button label="Bottle" name="unit"></el-radio-button>
         <el-radio-button label="Box" name="unit"></el-radio-button>
@@ -25,10 +25,10 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="Weight" prop="weight">
-      <el-input v-model="currentProducts.weight" type="number"></el-input>
+      <el-input v-model="ruleForm.weight" type="number"></el-input>
     </el-form-item>
     <el-form-item label="Price" prop="price">
-      <el-input v-model="currentProducts.price" type="number"></el-input>
+      <el-input v-model="ruleForm.price" type="number"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
@@ -135,6 +135,7 @@ export default {
 
   created() {
     this.fetchData()
+    Object.assign(this.ruleForm, this.currentProducts)
   },
   methods: {
     ...mapActions('products', {
@@ -144,7 +145,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.updateProduct({ id: this.id, data: this.currentProducts })
+          this.updateProduct({ id: this.id, data: this.ruleForm })
           this.$message({
             message: 'Product Updated Succesfully.',
             type: 'success',
@@ -168,8 +169,7 @@ export default {
         id: this.id,
         customUrl: 'https://tasi-backend.azurewebsites.net/api/products/1',
       })
-      this.ruleForm = data
-      return this.ruleForm
+      return data
     },
   },
 }

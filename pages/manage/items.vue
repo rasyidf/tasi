@@ -9,7 +9,8 @@
         <template #tool>
           <toolbar
             :query="query"
-            @addItem="handleAdd(scope.$index, scope.row)"
+            @addItem="handleAdd()"
+            @queryChanged="queryChanged($event)"
           ></toolbar>
         </template>
         <el-table-column label="Date" width="200">
@@ -44,16 +45,7 @@
           </template>
         </el-table-column>
         <el-table-column fixed="right" width="128">
-          <template slot="header" slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              icon="el-icon-plus"
-              @click="handleAdd(scope.$index, scope.row)"
-            >
-              Add Item
-            </el-button>
-          </template>
+          <template slot="header"> Operations </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -114,7 +106,7 @@ export default {
       drawerShow: false,
       editDrawerShow: false,
       query: '',
-      filters: [{ prop: 'Name', value: this.query }],
+      filters: [{ prop: 'name', value: this.query }],
     }
   },
   computed: {
@@ -143,13 +135,25 @@ export default {
       fetchArticles: 'fetchList',
       deleteProduct: 'destroy',
     }),
+    queryChanged(value) {
+      this.filters = [{ prop: 'name', value }]
+    },
+    ActivateDrawer(key) {
+      if (key === 'add') {
+        this.editDrawerShow = false
+        this.addDrawerShow = true
+      } else if (key === 'edit') {
+        this.editDrawerShow = true
+        this.addDrawerShow = false
+      }
+      this.drawerShow = true
+    },
     fetchData() {
       return this.fetchArticles()
     },
     handleEdit(index, row) {
-      this.editDrawerShow = true
       this.selectedIndex = index
-      this.drawerShow = true
+      this.ActivateDrawer('edit')
     },
     handleDelete(index, row) {
       this.deleteProduct({ id: index + 1 })
@@ -158,9 +162,8 @@ export default {
         type: 'success',
       })
     },
-    handleAdd(index, row) {
-      this.addDrawerShow = true
-      this.drawerShow = true
+    handleAdd() {
+      this.ActivateDrawer('add')
     },
   },
 }
