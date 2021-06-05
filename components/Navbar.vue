@@ -2,8 +2,10 @@
   <el-card class="main_navbar p-0" shadow="always">
     <el-menu
       :default-active="$route.path"
+      menu-trigger="click"
       class="el-menu-demo"
       mode="horizontal"
+      unique-opened
       @select="menuSelect"
     >
       <el-menu-item index="/">Beranda</el-menu-item>
