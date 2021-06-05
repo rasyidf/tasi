@@ -35,7 +35,7 @@
           </template>
         </el-table-column>
         <el-table-column fixed="right" width="128">
-          <template slot="header"> Operations </template>
+          <template slot="header"> Operasi </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -43,11 +43,11 @@
               @click="handleEdit(scope.$index + 1, scope.row)"
             ></el-button>
             <el-popconfirm
-              confirm-button-text="OK"
-              cancel-button-text="No, Thanks"
+              confirm-button-text="Oke"
+              cancel-button-text="Tidak, terima kasih"
               icon="el-icon-info"
               icon-color="red"
-              title="Are you sure to delete this?"
+              title="Apakah Anda yakin akan menghapus ini?"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
               <el-button
@@ -107,7 +107,7 @@ export default {
     ]),
     drawerTitle() {
       if (this.addDrawerShow) {
-        return 'Add Supplier'
+        return 'Tambahkan Supplier.'
       }
       if (this.editDrawerShow) {
         return 'Edit Supplier [ ' + this.selectedIndex + ' ]'
@@ -147,7 +147,7 @@ export default {
     handleDelete(index, row) {
       this.deleteSupplier({ id: index + 1 })
       this.$message({
-        message: 'Deleted.',
+        message: 'Supplier berhasil di hapus.',
         type: 'success',
       })
     },

@@ -18,7 +18,6 @@
     </el-form-item>
     <el-form-item label="Role" prop="role">
       <el-radio-group v-model="ruleForm.role">
-        <el-radio-button label="SuperAdmin" name="role"></el-radio-button>
         <el-radio-button label="Supervisor" name="role"></el-radio-button>
         <el-radio-button label="Manager" name="role"></el-radio-button>
         <el-radio-button label="Customer" name="role"></el-radio-button>
@@ -27,7 +26,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Update</el-button
+        >Memperbarui</el-button
       >
     </el-form-item>
   </el-form>
@@ -52,16 +51,42 @@ export default {
         username: '',
       },
       rules: {
-        name: [
+        fullName: [
           {
             required: true,
-            message: 'Please input User name',
+            message: 'Please input Full Name',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
             message: 'Length should be 5 to 50',
+            trigger: 'blur',
+          },
+        ],
+        username: [
+          {
+            required: true,
+            message: 'Please input Username',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 50,
+            message: 'Length should be 5 to 50',
+            trigger: 'blur',
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Please input Address',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 200,
+            message: 'Length should be 5 to 200',
             trigger: 'blur',
           },
         ],

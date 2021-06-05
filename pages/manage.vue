@@ -12,11 +12,11 @@ export default {
     ChildName() {
       switch (this.$route.name) {
         case 'manage-items':
-          return 'Items'
+          return 'Produk'
         case 'manage-suppliers':
-          return 'Suppliers'
+          return 'Supplier'
         case 'manage-users':
-          return 'Users'
+          return 'Pengguna'
         default:
           return this.$route.name
       }

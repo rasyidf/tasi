@@ -1,13 +1,13 @@
 <template>
   <div class="flex">
     <el-card class="login-box">
-      <p class="title">Login</p>
+      <p class="title">Masuk</p>
       <el-tag
         v-if="$auth.$state.redirect"
         style="margin-bottom: 16px"
         type="warning"
       >
-        You have to login before accessing to
+        Anda harus masuk sebelum mengakses
         <strong>{{ $auth.$state.redirect }}</strong>
       </el-tag>
       <el-form @keydown.enter="login">
@@ -15,7 +15,7 @@
           <el-input
             ref="username"
             v-model="username"
-            placeholder="Deine Nutzername"
+            placeholder="Nama user kamu"
           />
         </el-form-item>
 
@@ -23,7 +23,7 @@
           <el-input
             v-model="password"
             type="password"
-            placeholder="Dein Passwort"
+            placeholder="Password kamu"
           />
         </el-form-item>
 
@@ -34,7 +34,7 @@
             style="width: 100%"
             @click="login"
           >
-            Sign In
+            Masuk
           </el-button>
         </div>
       </el-form>
@@ -97,7 +97,7 @@ export default {
         console.log(this.$auth.user)
         this.$message({
           title: 'Logged In',
-          message: "You're now logged in, redirecting to main site",
+          message: 'Anda sekarang masuk',
           duration: 3000,
           type: 'success',
         })

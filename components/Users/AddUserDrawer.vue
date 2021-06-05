@@ -47,10 +47,42 @@ export default {
         username: '',
       },
       rules: {
+        fullName: [
+          {
+            required: true,
+            message: 'Please input Full Name',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 50,
+            message: 'Length should be 5 to 50',
+            trigger: 'blur',
+          },
+        ],
         username: [
           {
             required: true,
-            message: 'Please input User name',
+            message: 'Please input Username',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 50,
+            message: 'Length should be 5 to 50',
+            trigger: 'blur',
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Please input Address',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 200,
+            message: 'Length should be 5 to 200',
             trigger: 'blur',
           },
         ],

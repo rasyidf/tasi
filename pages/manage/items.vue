@@ -13,7 +13,7 @@
             @queryChanged="queryChanged($event)"
           ></toolbar>
         </template>
-        <el-table-column label="Date" width="200">
+        <el-table-column label="Tanggal" width="200">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
@@ -29,23 +29,23 @@
             </el-popover>
           </template>
         </el-table-column>
-        <el-table-column label="Name">
+        <el-table-column label="Nama">
           <template slot-scope="scope">
             {{ scope.row.name }}
           </template>
         </el-table-column>
-        <el-table-column label="Price">
+        <el-table-column label="Harga">
           <template slot-scope="scope">
             {{ scope.row.price }}
           </template>
         </el-table-column>
-        <el-table-column label="Stock">
+        <el-table-column label="Stok">
           <template slot-scope="scope">
             {{ scope.row.stock }} {{ scope.row.unit }}
           </template>
         </el-table-column>
         <el-table-column fixed="right" width="128">
-          <template slot="header"> Operations </template>
+          <template slot="header"> Operasi </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -53,11 +53,11 @@
               @click="handleEdit(scope.$index + 1, scope.row)"
             ></el-button>
             <el-popconfirm
-              confirm-button-text="OK"
-              cancel-button-text="No, Thanks"
+              confirm-button-text="Oke"
+              cancel-button-text="Tidak, terima kasih"
               icon="el-icon-info"
               icon-color="red"
-              title="Are you sure to delete this?"
+              title="Apakah Anda yakin akan menghapus ini?"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
               <el-button
@@ -158,7 +158,7 @@ export default {
     handleDelete(index, row) {
       this.deleteProduct({ id: index + 1 })
       this.$message({
-        message: 'Deleted.',
+        message: 'Produk berhasil di hapus.',
         type: 'success',
       })
     },

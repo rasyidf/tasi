@@ -18,23 +18,23 @@
             <span style="margin-left: 10px">{{ scope.row.userId }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Name">
+        <el-table-column label="Nama">
           <template slot-scope="scope">
             {{ scope.row.fullName }}
           </template>
         </el-table-column>
-        <el-table-column label="Username">
+        <el-table-column label="Nama pengguna">
           <template slot-scope="scope">
             {{ scope.row.username }}
           </template>
         </el-table-column>
-        <el-table-column label="Role">
+        <el-table-column label="Wewenang">
           <template slot-scope="scope">
             <el-tag size="medium">{{ scope.row.role }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column fixed="right" width="128">
-          <template slot="header"> Operations </template>
+          <template slot="header"> Operasi </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -42,11 +42,11 @@
               @click="handleEdit(scope.$index + 1, scope.row)"
             ></el-button>
             <el-popconfirm
-              confirm-button-text="OK"
-              cancel-button-text="No, Thanks"
+              confirm-button-text="Oke"
+              cancel-button-text="Tidak, terima kasih"
               icon="el-icon-info"
               icon-color="red"
-              title="Are you sure to delete this?"
+              title="Apakah Anda yakin akan menghapus ini?"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
               <el-button
@@ -100,12 +100,12 @@ export default {
     ]),
     drawerTitle() {
       if (this.addDrawerShow) {
-        return 'Add User'
+        return 'Tambahkan pengguna'
       }
       if (this.editDrawerShow) {
-        return 'Edit User [ ' + this.selectedIndex + ' ]'
+        return 'Edit Pengguna [ ' + this.selectedIndex + ' ]'
       }
-      return 'User'
+      return 'Pengguna'
     },
   },
 
@@ -140,7 +140,7 @@ export default {
     handleDelete(index, row) {
       this.deleteUser({ id: index + 1 })
       this.$message({
-        message: 'Deleted.',
+        message: 'Supplier berhasil di hapus.',
         type: 'success',
       })
     },
