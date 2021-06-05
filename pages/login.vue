@@ -1,17 +1,21 @@
 <template>
   <div class="flex">
     <el-card class="login-box">
-      <p class="title">Login</p>
-      <el-alert v-if="$auth.$state.redirect" show>
-        You have to login before accessing to
+      <p class="title">Masuk</p>
+      <el-tag
+        v-if="$auth.$state.redirect"
+        style="margin-bottom: 16px"
+        type="warning"
+      >
+        Anda harus masuk sebelum mengakses
         <strong>{{ $auth.$state.redirect }}</strong>
-      </el-alert>
+      </el-tag>
       <el-form @keydown.enter="login">
         <el-form-item>
           <el-input
             ref="username"
             v-model="username"
-            placeholder="Deine Nutzername"
+            placeholder="Nama user kamu"
           />
         </el-form-item>
 
@@ -19,12 +23,19 @@
           <el-input
             v-model="password"
             type="password"
-            placeholder="Dein Passwort"
+            placeholder="Password kamu"
           />
         </el-form-item>
 
         <div class="text-center">
-          <el-button variant="primary" block @click="login"> Login </el-button>
+          <el-button
+            type="primary"
+            autofocus
+            style="width: 100%"
+            @click="login"
+          >
+            Masuk
+          </el-button>
         </div>
       </el-form>
     </el-card>
@@ -86,7 +97,7 @@ export default {
         console.log(this.$auth.user)
         this.$message({
           title: 'Logged In',
-          message: "You're now logged in, redirecting to main site",
+          message: 'Anda sekarang masuk',
           duration: 3000,
           type: 'success',
         })
@@ -111,9 +122,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #293146;
 }
 .flex .login-box {
-  min-width: 30%;
+  min-width: 40%;
   max-width: 50%;
 }
 .flex .title {
@@ -121,5 +133,8 @@ export default {
   font-size: 16px;
   font-weight: bold;
   align-self: center;
+}
+.el-card__body {
+  padding: 20px !important;
 }
 </style>

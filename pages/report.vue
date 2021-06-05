@@ -8,19 +8,20 @@
 
 <script>
 export default {
+  layout: 'default',
   computed: {
     ChildName() {
       switch (this.$route.name) {
         case 'report-audit_supplier':
-          return 'Audit Supplier'
+          return 'Laporan Supplier'
         case 'report-audit_user':
-          return 'Audit User'
+          return 'Laporan User'
         case 'report-items':
-          return 'Items Reports'
+          return 'Laporan Produk'
         case 'report-manufacture':
-          return 'Manufaktur'
+          return 'Laporan Mmanufaktur'
         case 'report-stocks':
-          return 'Stok Barang'
+          return 'Laporan Stok'
         default:
           return this.$route.name
       }

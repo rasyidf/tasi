@@ -1,46 +1,53 @@
 <template>
   <div class="container">
     <el-card class="p-0">
-      <el-table v-loading="isLoading" :data="suppliers" style="width: 100%">
+      <data-tables
+        :data="suppliers"
+        :filters="filters"
+        layout="tool, table, pagination"
+      >
+        <template #tool>
+          <toolbar
+            :query="query"
+            @addItem="handleAdd()"
+            @queryChanged="queryChanged($event)"
+          ></toolbar>
+        </template>
         <el-table-column label="Date" width="250">
           <template slot-scope="scope">
             <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ scope.row.ModifiedDate }}</span>
+            <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Name">
           <template slot-scope="scope">
-            {{ scope.row.Name }}
+            {{ scope.row.name }}
           </template>
         </el-table-column>
         <el-table-column label="Address">
           <template slot-scope="scope">
-            {{ scope.row.Address }}
+            <el-popover trigger="hover" placement="bottom">
+              {{ scope.row.latitude }}, {{ scope.row.longitude }}
+              <div slot="reference" class="name-wrapper">
+                <span> {{ scope.row.address }}</span>
+              </div>
+            </el-popover>
           </template>
         </el-table-column>
         <el-table-column fixed="right" width="128">
-          <template slot="header" slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              icon="el-icon-plus"
-              @click="handleAdd(scope.$index, scope.row)"
-            >
-              Add Item
-            </el-button>
-          </template>
+          <template slot="header"> Operasi </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
               icon="el-icon-edit"
-              @click="handleEdit(scope.$index, scope.row)"
+              @click="handleEdit(scope.$index + 1, scope.row)"
             ></el-button>
             <el-popconfirm
-              confirm-button-text="OK"
-              cancel-button-text="No, Thanks"
+              confirm-button-text="Oke"
+              cancel-button-text="Tidak, terima kasih"
               icon="el-icon-info"
               icon-color="red"
-              title="Are you sure to delete this?"
+              title="Apakah Anda yakin akan menghapus ini?"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
               <el-button
@@ -52,15 +59,44 @@
             </el-popconfirm>
           </template>
         </el-table-column>
-      </el-table>
+      </data-tables>
     </el-card>
+
+    <el-drawer
+      :title="drawerTitle"
+      :visible.sync="drawerShow"
+      size="40%"
+      destroy-on-close
+      direction="rtl"
+    >
+      <add-supplier-drawer v-if="addDrawerShow" />
+      <edit-supplier-drawer v-if="editDrawerShow" :id="selectedIndex" />
+    </el-drawer>
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
+import AddSupplierDrawer from '../../components/Suppliers/AddSupplierDrawer.vue'
+import EditSupplierDrawer from '../../components/Suppliers/EditSupplierDrawer.vue'
+import Toolbar from '../../components/Toolbar.vue'
 
 export default {
+  components: {
+    Toolbar,
+    AddSupplierDrawer,
+    EditSupplierDrawer,
+  },
+  data() {
+    return {
+      selectedIndex: 0,
+      addDrawerShow: false,
+      drawerShow: false,
+      editDrawerShow: false,
+      query: '',
+      filters: [{ prop: 'name', value: this.query }],
+    }
+  },
   computed: {
     ...mapGetters('suppliers', {
       suppliers: 'list',
@@ -69,29 +105,54 @@ export default {
     ...mapState([
       'route', // vuex-router-sync
     ]),
+    drawerTitle() {
+      if (this.addDrawerShow) {
+        return 'Tambahkan Supplier.'
+      }
+      if (this.editDrawerShow) {
+        return 'Edit Supplier [ ' + this.selectedIndex + ' ]'
+      }
+      return 'Supplier'
+    },
   },
 
   async created() {
     await this.$store.dispatch('suppliers/fetchList')
   },
   methods: {
+    ...mapActions('suppliers', {
+      fetchSuppliers: 'fetchList',
+      deleteSupplier: 'destroy',
+    }),
+    queryChanged(value) {
+      this.filters = [{ prop: 'name', value }]
+    },
+    ActivateDrawer(key) {
+      if (key === 'add') {
+        this.editDrawerShow = false
+        this.addDrawerShow = true
+      } else if (key === 'edit') {
+        this.editDrawerShow = true
+        this.addDrawerShow = false
+      }
+      this.drawerShow = true
+    },
+    fetchData() {
+      return this.fetchSuppliers()
+    },
     handleEdit(index, row) {
-      this.$message({
-        message: 'Edited.',
-        type: 'success',
-      })
+      this.selectedIndex = index
+      this.ActivateDrawer('edit')
     },
     handleDelete(index, row) {
+      this.deleteSupplier({ id: index + 1 })
       this.$message({
-        message: 'Deleted.',
+        message: 'Supplier berhasil di hapus.',
         type: 'success',
       })
     },
-    handleAdd(index, row) {
-      this.$message({
-        message: 'Added.',
-        type: 'success',
-      })
+    handleAdd() {
+      this.ActivateDrawer('add')
     },
   },
 }
