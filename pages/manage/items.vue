@@ -88,9 +88,9 @@
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
 import VueBarcode from 'vue-barcode'
-import AddProductDrawer from '../../components/AddProductDrawer.vue'
+import AddProductDrawer from '../../components/Products/AddProductDrawer.vue'
+import EditProductDrawer from '../../components/Products/EditProductDrawer.vue'
 import Toolbar from '../../components/Toolbar.vue'
-import EditProductDrawer from '../../components/EditProductDrawer.vue'
 
 export default {
   components: {

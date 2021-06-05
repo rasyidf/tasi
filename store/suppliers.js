@@ -16,12 +16,19 @@ client.interceptors.request.use(
 
 const crudModule = createCRUDModule({
   resource: 'suppliers',
-  urlRoot: 'https://60a33b107c6e8b0017e26954.mockapi.io/api/v1/tasi/suppliers',
-
+  urlRoot: 'https://tasi-backend.azurewebsites.net/api/suppliers',
+  idAttribute: 'supplierId',
   parseList(res) {
-    const data = res.data
+    const data = res.data.data.data
     return Object.assign({}, res, {
       data, // retrieve array from the json response
+    })
+  },
+  parseSingle(response) {
+    const { data } = response.data
+
+    return Object.assign({}, response, {
+      data, // expecting object with ID
     })
   },
 })
