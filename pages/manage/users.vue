@@ -1,7 +1,18 @@
 <template>
   <div class="container">
     <el-card class="p-0">
-      <el-table v-loading="isLoading" :data="users" style="width: 100%">
+      <data-tables
+        :data="users"
+        :filters="filters"
+        layout="tool, table, pagination"
+      >
+        <template #tool>
+          <toolbar
+            :query="query"
+            @addItem="handleAdd()"
+            @queryChanged="queryChanged($event)"
+          ></toolbar>
+        </template>
         <el-table-column label="Id">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.userId }}</span>
@@ -23,21 +34,12 @@
           </template>
         </el-table-column>
         <el-table-column fixed="right" width="128">
-          <template slot="header" slot-scope="scope">
-            <el-button
-              type="primary"
-              size="mini"
-              icon="el-icon-plus"
-              @click="handleAdd(scope.$index, scope.row)"
-            >
-              Add Item
-            </el-button>
-          </template>
+          <template slot="header"> Operations </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
               icon="el-icon-edit"
-              @click="handleEdit(scope.$index, scope.row)"
+              @click="handleEdit(scope.$index + 1, scope.row)"
             ></el-button>
             <el-popconfirm
               confirm-button-text="OK"
@@ -56,7 +58,7 @@
             </el-popconfirm>
           </template>
         </el-table-column>
-      </el-table>
+      </data-tables>
     </el-card>
     <el-drawer
       :title="drawerTitle"
@@ -90,7 +92,7 @@ export default {
   },
   computed: {
     ...mapGetters('users', {
-      suppliers: 'list',
+      users: 'list',
       isLoading: 'isLoading',
     }),
     ...mapState([
@@ -108,12 +110,12 @@ export default {
   },
 
   async created() {
-    await this.$store.dispatch('suppliers/fetchList')
+    await this.$store.dispatch('users/fetchList')
   },
   methods: {
     ...mapActions('users', {
-      fetchSuppliers: 'fetchList',
-      deleteSupplier: 'destroy',
+      fetchUsers: 'fetchList',
+      deleteUser: 'destroy',
     }),
     queryChanged(value) {
       this.filters = [{ prop: 'name', value }]
@@ -129,14 +131,14 @@ export default {
       this.drawerShow = true
     },
     fetchData() {
-      return this.fetchSuppliers()
+      return this.fetchUsers()
     },
     handleEdit(index, row) {
       this.selectedIndex = index
       this.ActivateDrawer('edit')
     },
     handleDelete(index, row) {
-      this.deleteSupplier({ id: index + 1 })
+      this.deleteUser({ id: index + 1 })
       this.$message({
         message: 'Deleted.',
         type: 'success',
