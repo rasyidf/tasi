@@ -2,9 +2,10 @@
   <el-form
     v-if="currentSupplierss"
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
   >
     <el-form-item label="Supplier name" prop="name">
@@ -84,13 +85,14 @@ export default {
         if (valid) {
           this.updateSuppliers({ id: this.id, data: this.ruleForm })
           this.$message({
-            message: 'Supplier Updated Succesfully.',
+            message: 'Informasi Supplier berhasil diperbarui.',
             type: 'success',
           })
+          this.$refs.drawer.closeDrawer()
           return true
         } else {
           this.$message({
-            message: 'Error Updating Supplier.',
+            message: 'Terjadi kesalahan saat memperbarui Supplier.',
             type: 'warning',
           })
           return false

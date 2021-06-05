@@ -1,9 +1,10 @@
 <template>
   <el-form
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
     class="demo-ruleForm"
   >
@@ -56,55 +57,55 @@ export default {
       rules: {
         barcode: [
           {
-            required: false,
-            message: 'Please input Barcode',
+            required: true,
+            message: 'Silakan masukkan barcode.',
             trigger: 'blur',
           },
           {
-            min: 10,
-            max: 11,
-            message: 'Length should be 10 to 11',
+            min: 5,
+            max: 43,
+            message: 'Panjangnya harus 5 hingga 43',
             trigger: 'blur',
           },
         ],
         name: [
           {
             required: true,
-            message: 'Please input Product name',
+            message: 'Silakan masukan nama produk',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
         unit: [
           {
             required: true,
-            message: 'Please select one unit',
+            message: 'Silakan pilih satu unit',
             trigger: 'change',
           },
         ],
         canManufacture: [
           {
             required: true,
-            message: 'Please specify if its can be manufactured',
+            message: 'Silakan tentukan apakah produk dapat diproduksi',
             trigger: 'blur',
           },
         ],
         price: [
           {
             required: true,
-            message: 'Please input price',
+            message: 'Silakan masukan Harga produk.',
             trigger: 'blur',
           },
         ],
         weight: [
           {
             required: true,
-            message: 'Please input product weight',
+            message: 'Silakan masukkan berat produk',
             trigger: 'blur',
           },
         ],
@@ -129,9 +130,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.addProduct({ data: this.ruleForm })
+          this.$message({
+            message: 'Produk berhasil ditambahkan.',
+            type: 'success',
+          })
+          this.$emit('completed')
         } else {
           this.$message({
-            message: 'Error Updating Product.',
+            message: 'Terjadi kesalahan saat menambah Produk.',
             type: 'warning',
           })
           return false

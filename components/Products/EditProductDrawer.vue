@@ -2,9 +2,10 @@
   <el-form
     v-if="currentProducts"
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
   >
     <el-form-item label="Barcode" prop="barcode">
@@ -147,13 +148,14 @@ export default {
         if (valid) {
           this.updateProduct({ id: this.id, data: this.ruleForm })
           this.$message({
-            message: 'Product Updated Succesfully.',
+            message: 'Informasi Produk berhasil diperbarui.',
             type: 'success',
           })
+          this.$emit('completed')
           return true
         } else {
           this.$message({
-            message: 'Error Updating Product.',
+            message: 'Terjadi kesalahan saat memperbarui Produk.',
             type: 'warning',
           })
           return false

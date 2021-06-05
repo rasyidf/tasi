@@ -1,9 +1,10 @@
 <template>
   <el-form
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
     class="demo-ruleForm"
   >
@@ -35,13 +36,26 @@ export default {
         name: [
           {
             required: true,
-            message: 'Please input Product name',
+            message: 'Silakan masukkan nama pemasok',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
+            trigger: 'blur',
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Silakan masukkan alamat',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 200,
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
@@ -61,11 +75,23 @@ export default {
     ...mapActions('suppliers', {
       addProduct: 'create',
     }),
+    async GetLocationAsync() {
+      const location = await this.$axios.$get('/api/maps/lookup')
 
+      return location
+    },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.addProduct({ data: this.ruleForm })
+          const location = await this.GetLocationAsync()
+          this.addProduct({
+            data: {
+              ...this.ruleForm,
+              latitude: location[0],
+              longitude: location[1],
+            },
+          })
+          this.$refs.drawer.closeDrawer()
         } else {
           this.$message({
             message: 'Error Adding Supplier.',

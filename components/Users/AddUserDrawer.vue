@@ -1,10 +1,11 @@
 <template>
   <el-form
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
     label-width="130px"
+    label-position="left"
     class="demo-ruleForm"
   >
     <el-form-item label="User name" prop="username">
@@ -50,39 +51,39 @@ export default {
         fullName: [
           {
             required: true,
-            message: 'Please input Full Name',
+            message: 'Silakan masukan nama lengkap',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
         username: [
           {
             required: true,
-            message: 'Please input Username',
+            message: 'Silakan masukkan nama pengguna',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
         address: [
           {
             required: true,
-            message: 'Please input Address',
+            message: 'Silakan masukan Alamat',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 200,
-            message: 'Length should be 5 to 200',
+            message: 'Panjangnya harus 5 hingga 200',
             trigger: 'blur',
           },
         ],
@@ -91,7 +92,7 @@ export default {
   },
   computed: {
     ...mapGetters('users', {
-      products: 'list',
+      users: 'list',
       isLoading: 'isLoading',
     }),
     ...mapState([
@@ -100,13 +101,14 @@ export default {
   },
   methods: {
     ...mapActions('users', {
-      addProduct: 'create',
+      addUser: 'create',
     }),
 
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.addProduct({ data: this.ruleForm })
+          this.addUser({ data: this.ruleForm })
+          this.$refs.drawer.closeDrawer()
         } else {
           this.$message({
             message: 'Error Adding User.',
