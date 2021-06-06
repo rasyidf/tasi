@@ -6,7 +6,7 @@
         <nuxt-link to="manage/items">
           <el-button icon="el-icon-takeaway-box">
             <div class="content">
-              <span class="head"> Barang</span>
+              <span class="head">Barang</span>
               <div class="body"><p>Lihat data produk pada gudang.</p></div>
             </div>
           </el-button>
@@ -16,7 +16,7 @@
         <nuxt-link to="manage/suppliers">
           <el-button icon="el-icon-truck">
             <div class="content">
-              <span class="head"> Supplier</span>
+              <span class="head">Supplier</span>
               <div class="body"><p>Lihat data supplier bahan mentah.</p></div>
             </div>
           </el-button>
@@ -26,7 +26,7 @@
         <nuxt-link to="manage/users">
           <el-button icon="el-icon-user">
             <div class="content">
-              <span class="head"> Pengguna</span>
+              <span class="head">Pengguna</span>
               <div class="body"><p>Lihat data pengguna dan aksesnya.</p></div>
             </div>
           </el-button>
@@ -39,7 +39,7 @@
         <nuxt-link to="ops/orders">
           <el-button icon="el-icon-shopping-cart-full">
             <div class="content">
-              <span class="head"> Pesanan</span>
+              <span class="head">Pesanan</span>
               <div class="body"><p>Pesan/kirim barang manufaktur.</p></div>
             </div>
           </el-button>
@@ -49,7 +49,7 @@
         <nuxt-link to="ops/manufacture">
           <el-button icon="el-icon-box">
             <div class="content">
-              <span class="head"> Manufaktur</span>
+              <span class="head">Manufaktur</span>
               <div class="body"><p>Lihat data supplier bahan mentah.</p></div>
             </div>
           </el-button>
@@ -64,7 +64,10 @@
             <div class="content">
               <span class="head"> Laporan Barang</span>
               <div class="body">
-                <p>Laporan transaksi barang<brw /> dari supplier dan gudang.</p>
+                <p>
+                  Laporan transaksi barang<br />
+                  dari supplier dan gudang.
+                </p>
               </div>
             </div>
           </el-button>
