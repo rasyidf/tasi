@@ -40,8 +40,12 @@
           <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>Profile</el-dropdown-item>
-          <el-dropdown-item command="logout">Log Out</el-dropdown-item>
+          <el-dropdown-item command="profile" icon="el-icon-user"
+            ><span>Profil</span></el-dropdown-item
+          >
+          <el-dropdown-item command="logout" icon="el-icon-arrow-left"
+            ><span>Log Out</span></el-dropdown-item
+          >
         </el-dropdown-menu>
       </el-dropdown>
     </div>

@@ -4,6 +4,7 @@
       <data-tables
         :data="products"
         :filters="filters"
+        :loading="isLoading"
         layout="tool, table, pagination"
       >
         <template #tool>
@@ -72,14 +73,19 @@
       </data-tables>
 
       <el-drawer
-        :title="drawerTitle"
+        ref="drawer"
         :visible.sync="drawerShow"
+        :with-header="false"
         size="40%"
         destroy-on-close
         direction="rtl"
       >
-        <add-product-drawer v-if="addDrawerShow" />
-        <edit-product-drawer v-if="editDrawerShow" :id="selectedIndex" />
+        <add-product-drawer v-if="addDrawerShow" @completed="OnCompleted()" />
+        <edit-product-drawer
+          v-if="editDrawerShow"
+          :id="selectedIndex"
+          @completed="OnCompleted()"
+        />
       </el-drawer>
     </el-card>
   </div>
@@ -117,15 +123,6 @@ export default {
     ...mapState([
       'route', // vuex-router-sync
     ]),
-    drawerTitle() {
-      if (this.addDrawerShow) {
-        return 'Add Products'
-      }
-      if (this.editDrawerShow) {
-        return 'Edit Products [ ' + this.selectedIndex + ' ]'
-      }
-      return 'Product'
-    },
   },
   async created() {
     await this.$store.dispatch('products/fetchList')
@@ -135,6 +132,9 @@ export default {
       fetchArticles: 'fetchList',
       deleteProduct: 'destroy',
     }),
+    OnCompleted() {
+      this.$refs.drawer.closeDrawer()
+    },
     queryChanged(value) {
       this.filters = [{ prop: 'name', value }]
     },

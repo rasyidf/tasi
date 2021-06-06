@@ -29,7 +29,7 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxtjs/auth-next'],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: { baseURL: 'https://tasi-backend.azurewebsites.net/api' },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -53,6 +53,7 @@ export default {
     linkExactActiveClass: 'active',
     middleware: ['auth'],
   },
+
   auth: {
     strategies: {
       local: {
@@ -64,14 +65,15 @@ export default {
         },
         user: {
           property: 'data',
+          autoFetch: false,
         },
         endpoints: {
           login: {
-            url: 'https://tasi-backend.azurewebsites.net/api/users/login',
+            url: '/users/login',
             method: 'post',
           },
           user: {
-            url: 'https://tasi-backend.azurewebsites.net/api/users/profile',
+            url: '/users/profile/',
             method: 'get',
           },
           logout: false,

@@ -19,7 +19,7 @@ export default {
         case 'report-items':
           return 'Laporan Produk'
         case 'report-manufacture':
-          return 'Laporan Mmanufaktur'
+          return 'Laporan Manufaktur'
         case 'report-stocks':
           return 'Laporan Stok'
         default:
