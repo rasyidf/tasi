@@ -4,6 +4,7 @@
       <data-tables
         :data="users"
         :filters="filters"
+        :loading="isLoading"
         layout="tool, table, pagination"
       >
         <template #tool>
@@ -61,14 +62,19 @@
       </data-tables>
     </el-card>
     <el-drawer
-      :title="drawerTitle"
+      ref="drawer"
+      :with-header="false"
       :visible.sync="drawerShow"
       size="40%"
       destroy-on-close
       direction="rtl"
     >
-      <add-user-drawer v-if="addDrawerShow" />
-      <edit-user-drawer v-if="editDrawerShow" :id="selectedIndex" />
+      <add-user-drawer v-if="addDrawerShow" @completed="OnCompleted()" />
+      <edit-user-drawer
+        v-if="editDrawerShow"
+        :id="selectedIndex"
+        @completed="OnCompleted()"
+      />
     </el-drawer>
   </div>
 </template>
@@ -77,9 +83,10 @@
 import { mapGetters, mapState, mapActions } from 'vuex'
 import AddUserDrawer from '../../components/Users/AddUserDrawer.vue'
 import EditUserDrawer from '../../components/Users/EditUserDrawer.vue'
+import Toolbar from '../../components/Toolbar.vue'
 
 export default {
-  components: { AddUserDrawer, EditUserDrawer },
+  components: { AddUserDrawer, EditUserDrawer, Toolbar },
   data() {
     return {
       selectedIndex: 0,
@@ -117,6 +124,9 @@ export default {
       fetchUsers: 'fetchList',
       deleteUser: 'destroy',
     }),
+    OnCompleted() {
+      this.$refs.drawer.closeDrawer()
+    },
     queryChanged(value) {
       this.filters = [{ prop: 'name', value }]
     },
@@ -134,13 +144,27 @@ export default {
       return this.fetchUsers()
     },
     handleEdit(index, row) {
+      if (row.role === 'SuperAdmin') {
+        this.$message({
+          message: 'Superadmin tidak dapat disunting.',
+          type: 'warning',
+        })
+        return
+      }
       this.selectedIndex = index
       this.ActivateDrawer('edit')
     },
     handleDelete(index, row) {
+      if (row.role === 'SuperAdmin') {
+        this.$message({
+          message: 'Superadmin tidak dapat dihapus.',
+          type: 'warning',
+        })
+        return
+      }
       this.deleteUser({ id: index + 1 })
       this.$message({
-        message: 'Supplier berhasil di hapus.',
+        message: 'Pengguna berhasil di hapus.',
         type: 'success',
       })
     },

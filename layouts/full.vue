@@ -8,4 +8,10 @@ html body {
   margin: 0px;
   padding: 0px;
 }
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+}
 </style>

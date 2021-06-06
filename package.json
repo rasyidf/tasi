@@ -15,6 +15,7 @@
   "dependencies": {
     "@nuxtjs/auth-next": "5.0.0-1620773067.c356fed",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "element-ui": "^2.15.1",

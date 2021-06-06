@@ -1,21 +1,33 @@
 <template>
   <el-form
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
     class="demo-ruleForm"
   >
-    <el-form-item label="Supplier name" prop="name">
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Tambah Supplier</p>
+      <el-tag type="success" size="small">_</el-tag>
+    </div>
+    <el-form-item label="Nama Supplier" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="Address" prop="address">
+    <el-form-item label="Alamat" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Create</el-button
+        >Tambah</el-button
       >
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
     </el-form-item>
@@ -35,13 +47,26 @@ export default {
         name: [
           {
             required: true,
-            message: 'Please input Product name',
+            message: 'Silakan masukkan nama pemasok',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
+            trigger: 'blur',
+          },
+        ],
+        address: [
+          {
+            required: true,
+            message: 'Silakan masukkan alamat',
+            trigger: 'blur',
+          },
+          {
+            min: 5,
+            max: 200,
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
@@ -61,11 +86,23 @@ export default {
     ...mapActions('suppliers', {
       addProduct: 'create',
     }),
+    async GetLocationAsync() {
+      const location = await this.$axios.$get('/api/maps/lookup')
 
+      return location
+    },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.addProduct({ data: this.ruleForm })
+          const location = await this.GetLocationAsync()
+          this.addProduct({
+            data: {
+              ...this.ruleForm,
+              latitude: location[0],
+              longitude: location[1],
+            },
+          })
+          this.$refs.drawer.closeDrawer()
         } else {
           this.$message({
             message: 'Error Adding Supplier.',

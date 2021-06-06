@@ -1,4 +1,7 @@
 export default {
+  config: {
+    devtools: true,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'TASI',
@@ -49,6 +52,7 @@ export default {
   build: {
     transpile: [/^element-ui/],
   },
+
   router: {
     linkExactActiveClass: 'active',
     middleware: ['auth'],
@@ -64,6 +68,7 @@ export default {
         },
         user: {
           property: 'data',
+          autoFetch: false,
         },
         endpoints: {
           login: {
@@ -71,7 +76,7 @@ export default {
             method: 'post',
           },
           user: {
-            url: 'https://tasi-backend.azurewebsites.net/api/users/profile',
+            url: 'https://tasi-backend.azurewebsites.net/api/users/profile/',
             method: 'get',
           },
           logout: false,

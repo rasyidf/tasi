@@ -4,7 +4,9 @@
       <Navbar />
     </el-header>
     <el-container>
-      <el-main class="main-item"> <Nuxt /></el-main>
+      <el-main class="main-item">
+        <transition name="el-fade-in-linear"> <Nuxt /></transition>
+      </el-main>
       <el-footer class="main-footer">
         <span> Copyright &copy; 2021, UNPAK</span>
       </el-footer>
@@ -41,5 +43,11 @@ html {
 }
 .el-main {
   padding: 8px;
+}
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
 }
 </style>

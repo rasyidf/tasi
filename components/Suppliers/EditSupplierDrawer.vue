@@ -2,20 +2,31 @@
   <el-form
     v-if="currentSupplierss"
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
-  >
-    <el-form-item label="Supplier name" prop="name">
+    ><div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Sunting Supplier</p>
+      <el-tag size="small">{{ id }}</el-tag>
+    </div>
+    <el-form-item label="Nama Supplier" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="Address" prop="address">
+    <el-form-item label="Alamat" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Update</el-button
+        >Perbarui</el-button
       >
     </el-form-item>
   </el-form>
@@ -84,13 +95,14 @@ export default {
         if (valid) {
           this.updateSuppliers({ id: this.id, data: this.ruleForm })
           this.$message({
-            message: 'Supplier Updated Succesfully.',
+            message: 'Informasi Supplier berhasil diperbarui.',
             type: 'success',
           })
+          this.$refs.drawer.closeDrawer()
           return true
         } else {
           this.$message({
-            message: 'Error Updating Supplier.',
+            message: 'Terjadi kesalahan saat memperbarui Supplier.',
             type: 'warning',
           })
           return false
@@ -104,7 +116,6 @@ export default {
     fetchData() {
       const data = this.fetchSuppliers({
         id: this.id,
-        customUrl: 'https://tasi-backend.azurewebsites.net/api/suppliers/1',
       })
       return data
     },

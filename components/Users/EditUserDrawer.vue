@@ -1,12 +1,24 @@
 <template>
   <el-form
-    v-if="currentUserss"
+    v-if="currentUsers"
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
   >
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Sunting User</p>
+      <el-tag size="small">{{ id }}</el-tag>
+    </div>
     <el-form-item label="User name" prop="username">
       <el-input v-model="ruleForm.username"></el-input>
     </el-form-item>
@@ -26,7 +38,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Memperbarui</el-button
+        >Perbarui</el-button
       >
     </el-form-item>
   </el-form>
@@ -102,7 +114,7 @@ export default {
       'route', // vuex-router-sync
     ]),
 
-    currentUserss() {
+    currentUsers() {
       return this.userById(this.id)
     },
   },
@@ -112,7 +124,7 @@ export default {
 
   created() {
     this.fetchData()
-    Object.assign(this.ruleForm, this.currentUserss)
+    Object.assign(this.ruleForm, this.currentUsers)
   },
   methods: {
     ...mapActions('users', {
@@ -124,13 +136,14 @@ export default {
         if (valid) {
           this.updateUsers({ id: this.id, data: this.ruleForm })
           this.$message({
-            message: 'User Updated Succesfully.',
+            message: 'Informasi Pengguna berhasil diperbarui.',
             type: 'success',
           })
+          this.$refs.drawer.closeDrawer()
           return true
         } else {
           this.$message({
-            message: 'Error Updating User.',
+            message: 'Terjadi kesalahan saat memperbarui User.',
             type: 'warning',
           })
           return false
@@ -144,7 +157,6 @@ export default {
     fetchData() {
       const data = this.fetchUsers({
         id: this.id,
-        customUrl: 'https://tasi-backend.azurewebsites.net/api/users/1',
       })
       return data
     },

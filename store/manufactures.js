@@ -1,34 +1,31 @@
 import createCRUDModule, { client } from 'vuex-crud'
 
 client.interceptors.request.use(
-  function (config) {
+  (config) => {
     const token = localStorage.getItem('auth._token.local')
     config.headers = {
       Authorization: token || '',
     }
     return config
   },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error)
-  }
+  (error) => Promise.reject(error)
 )
 
 const crudModule = createCRUDModule({
-  resource: 'orders',
-  urlRoot: 'https://tasi-backend.azurewebsites.net/api/orders',
-  idAttribute: 'orderId',
+  resource: 'manufactures',
+  urlRoot: 'https://tasi-backend.azurewebsites.net/api/manufacture',
+  idAttribute: 'manufactureId',
   parseList(res) {
     const { data } = res.data.data
     return Object.assign({}, res, {
-      data, // retrieve array from the json response
+      data,
     })
   },
   parseSingle(res) {
     const { data } = res.data
 
     return Object.assign({}, res, {
-      data, // expecting object with ID
+      data,
     })
   },
 })

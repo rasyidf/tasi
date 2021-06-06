@@ -2,7 +2,7 @@
   <div class="container">
     <el-card class="p-0">
       <data-tables
-        :data="products"
+        :data="orders"
         :filters="filters"
         :loading="isLoading"
         layout="tool, table, pagination"
@@ -14,97 +14,79 @@
             @queryChanged="queryChanged($event)"
           ></toolbar>
         </template>
-        <el-table-column label="Tanggal" width="200">
+        <el-table-column label="Tanggal Dibuat">
           <template slot-scope="scope">
-            <i class="el-icon-time"></i>
             <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Barcode" width="130">
+        <el-table-column label="Tipe">
           <template slot-scope="scope">
-            <el-popover trigger="hover" placement="bottom">
-              <VueBarcode :value="scope.row.barcode" />
-              <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.barcode }}</el-tag>
-              </div>
-            </el-popover>
-          </template>
-        </el-table-column>
-        <el-table-column label="Nama">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
+            <el-tag size="medium">{{ scope.row.type }}</el-tag>
           </template>
         </el-table-column>
         <el-table-column label="Harga">
           <template slot-scope="scope">
-            {{ scope.row.price }}
+            <span size="medium">{{ scope.row.subTotal }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Stok">
+        <el-table-column label="Status Terakhir">
           <template slot-scope="scope">
-            {{ scope.row.stock }} {{ scope.row.unit }}
+            {{ scope.row.lastStatus.code }}
           </template>
         </el-table-column>
-        <el-table-column fixed="right" width="128">
+        <el-table-column fixed="right" width="300">
           <template slot="header"> Operasi </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
-              icon="el-icon-edit"
-              @click="handleEdit(scope.$index + 1, scope.row)"
-            ></el-button>
+              icon="el-icon-info"
+              @click="handleStepBack(scope.$index + 1, scope.row)"
+              >Details</el-button
+            >
+            <el-button
+              size="mini"
+              icon="el-icon-right"
+              @click="handleStepForward(scope.$index + 1, scope.row)"
+              >Prosess</el-button
+            >
             <el-popconfirm
-              confirm-button-text="Oke"
-              cancel-button-text="Tidak, terima kasih"
+              confirm-button-text="Ya"
+              cancel-button-text="Tidak"
               icon="el-icon-info"
               icon-color="red"
-              title="Apakah Anda yakin akan menghapus ini?"
+              title="Apakah Anda yakin akan mereject transaksi ini"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
               <el-button
                 slot="reference"
                 size="mini"
-                icon="el-icon-delete"
+                icon="el-icon-close"
                 type="danger"
-              ></el-button>
+                >Tolak</el-button
+              >
             </el-popconfirm>
           </template>
         </el-table-column>
       </data-tables>
-
-      <el-drawer
-        ref="drawer"
-        :visible.sync="drawerShow"
-        :with-header="false"
-        size="40%"
-        destroy-on-close
-        direction="rtl"
-      >
-        <add-product-drawer v-if="addDrawerShow" @completed="OnCompleted()" />
-        <edit-product-drawer
-          v-if="editDrawerShow"
-          :id="selectedIndex"
-          @completed="OnCompleted()"
-        />
-      </el-drawer>
     </el-card>
+    <el-drawer
+      ref="drawer"
+      :with-header="false"
+      :visible.sync="drawerShow"
+      size="40%"
+      destroy-on-close
+      direction="rtl"
+    >
+    </el-drawer>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
-import VueBarcode from 'vue-barcode'
-import AddProductDrawer from '../../components/Products/AddProductDrawer.vue'
-import EditProductDrawer from '../../components/Products/EditProductDrawer.vue'
-import Toolbar from '../../components/Toolbar.vue'
+import Toolbar from '../../../components/Toolbar.vue'
 
 export default {
-  components: {
-    VueBarcode,
-    AddProductDrawer,
-    EditProductDrawer,
-    Toolbar,
-  },
+  components: { Toolbar },
   data() {
     return {
       selectedIndex: 0,
@@ -116,21 +98,31 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('products', {
-      products: 'list',
+    ...mapGetters('orders', {
+      orders: 'list',
       isLoading: 'isLoading',
     }),
     ...mapState([
       'route', // vuex-router-sync
     ]),
+    drawerTitle() {
+      if (this.addDrawerShow) {
+        return 'Tambahkan pengguna'
+      }
+      if (this.editDrawerShow) {
+        return 'Edit Pengguna [ ' + this.selectedIndex + ' ]'
+      }
+      return 'Pengguna'
+    },
   },
+
   async created() {
-    await this.$store.dispatch('products/fetchList')
+    await this.$store.dispatch('orders/fetchList')
   },
   methods: {
-    ...mapActions('products', {
-      fetchArticles: 'fetchList',
-      deleteProduct: 'destroy',
+    ...mapActions('orders', {
+      fetchUsers: 'fetchList',
+      deleteUser: 'destroy',
     }),
     OnCompleted() {
       this.$refs.drawer.closeDrawer()
@@ -149,21 +141,22 @@ export default {
       this.drawerShow = true
     },
     fetchData() {
-      return this.fetchArticles()
+      return this.fetchUsers()
     },
-    handleEdit(index, row) {
+    handleStepBack(index, row) {
       this.selectedIndex = index
-      this.ActivateDrawer('edit')
+    },
+    handleStepForward(index, row) {
+      this.selectedIndex = index
     },
     handleDelete(index, row) {
-      this.deleteProduct({ id: index + 1 })
       this.$message({
-        message: 'Produk berhasil di hapus.',
+        message: 'Pengguna berhasil di hapus.',
         type: 'success',
       })
     },
     handleAdd() {
-      this.ActivateDrawer('add')
+      this.$router.push('/ops/orders/add')
     },
   },
 }

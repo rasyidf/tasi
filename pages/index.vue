@@ -2,32 +2,32 @@
   <el-main class="dashboard">
     <h3>Manajemen</h3>
     <el-row :gutter="20">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="manage/items">
           <el-button icon="el-icon-takeaway-box">
             <div class="content">
-              <span class="head"> Barang</span>
-              <span class="body"> Lihat data produk pada gudang.</span>
+              <span class="head">Barang</span>
+              <div class="body"><p>Lihat data produk pada gudang.</p></div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="manage/suppliers">
           <el-button icon="el-icon-truck">
             <div class="content">
-              <span class="head"> Supplier</span>
-              <span class="body"> Lihat data supplier bahan mentah.</span>
+              <span class="head">Supplier</span>
+              <div class="body"><p>Lihat data supplier bahan mentah.</p></div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="manage/users">
           <el-button icon="el-icon-user">
             <div class="content">
-              <span class="head"> Pengguna</span>
-              <span class="body"> Lihat data pengguna dan aksesnya.</span>
+              <span class="head">Pengguna</span>
+              <div class="body"><p>Lihat data pengguna dan aksesnya.</p></div>
             </div>
           </el-button>
         </nuxt-link>
@@ -35,22 +35,22 @@
     </el-row>
     <h3>Operasional</h3>
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12">
         <nuxt-link to="ops/orders">
           <el-button icon="el-icon-shopping-cart-full">
             <div class="content">
-              <span class="head"> Pesanan</span>
-              <span class="body"> Pesan/kirim barang manufaktur.</span>
+              <span class="head">Pesanan</span>
+              <div class="body"><p>Pesan/kirim barang manufaktur.</p></div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12">
         <nuxt-link to="ops/manufacture">
           <el-button icon="el-icon-box">
             <div class="content">
-              <span class="head"> Manufaktur</span>
-              <span class="body"> Lihat data supplier bahan mentah.</span>
+              <span class="head">Manufaktur</span>
+              <div class="body"><p>Lihat data supplier bahan mentah.</p></div>
             </div>
           </el-button>
         </nuxt-link>
@@ -58,34 +58,40 @@
     </el-row>
     <h3>Laporan</h3>
     <el-row :gutter="20">
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :lg="12">
         <nuxt-link to="report/items">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
-              <span class="head"> Transaksi Barang</span>
-              <span class="body">
-                Laporan transaksi barang dari supplier dan gudang.</span
-              >
+              <span class="head">Laporan Barang</span>
+              <div class="body">
+                <p>Laporan transaksi barang dari supplier dan gudang.</p>
+              </div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :span="8">
+      <el-col :xs="24" :sm="24" :lg="12">
         <nuxt-link to="report/manufacture">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
-              <span class="head"> Transaksi Manufaktur</span>
-              <span class="body"> Laporan data hasil manufaktur barang.</span>
+              <span class="head">Laporan Manufaktur</span>
+              <div class="body">
+                <p>Laporan data hasil manufaktur barang.</p>
+              </div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :span="8">
-        <nuxt-link to="report/stocks">
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="24" :lg="24">
+        <nuxt-link to="report/transactions">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
-              <span class="head"> Stok barang</span>
-              <span class="body"> Laporan stok barang pada gudang.</span>
+              <span class="head">Laporan Transaski</span>
+              <div class="body">
+                <p>Laporan transaksi supplier dan penjualan.</p>
+              </div>
             </div>
           </el-button>
         </nuxt-link>
@@ -93,22 +99,24 @@
     </el-row>
     <h3></h3>
     <el-row :gutter="20">
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12">
         <nuxt-link to="report/audit_user">
           <el-button icon="el-icon-notebook-1">
             <div class="content">
-              <span class="head"> Audit Pengguna</span>
-              <span class="body"> Laporan data pengguna dan hak aksesnya.</span>
+              <span class="head"> Laporan Pengguna</span>
+              <div class="body">
+                <p>Laporan data pengguna dan hak aksesnya.</p>
+              </div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :span="12">
+      <el-col :xs="24" :sm="12">
         <nuxt-link to="report/audit_supplier">
           <el-button icon="el-icon-notebook-1">
             <div class="content">
-              <span class="head"> Audit Supplier</span>
-              <span class="body"> Laporan data supplier bahan mentah.</span>
+              <span class="head"> Laporan Supplier</span>
+              <div class="body"><p>Laporan data supplier bahan mentah.</p></div>
             </div>
           </el-button>
         </nuxt-link>
@@ -130,7 +138,8 @@ export default {
 
 .dashboard .el-button {
   width: 100%;
-  height: 8em;
+  margin-bottom: 0.5em;
+  height: 7em;
   padding: 0em;
   display: flex;
   align-items: center;
@@ -148,18 +157,20 @@ export default {
 .dashboard .content {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .dashboard .head {
   font-weight: bold;
   text-align: left;
 }
 .dashboard .body {
-  margin-top: 0.5em;
+  margin-top: 0.4em;
+  position: relative;
+  word-wrap: break-word;
+  line-height: 0.1rem;
+}
+.dashboard .body p {
   font-weight: 500;
-  text-align: start;
-  overflow: auto;
-  overflow-y: hidden;
-  overflow-x: hidden;
-  overflow-wrap: normal;
+  text-align: left;
 }
 </style>

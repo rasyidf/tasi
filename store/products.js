@@ -19,15 +19,15 @@ const crudModule = createCRUDModule({
   urlRoot: 'https://tasi-backend.azurewebsites.net/api/products',
   idAttribute: 'productId',
   parseList(res) {
-    const data = res.data.data.data
+    const { data } = res.data.data
     return Object.assign({}, res, {
       data, // retrieve array from the json response
     })
   },
-  parseSingle(response) {
-    const { data } = response.data
+  parseSingle(res) {
+    const { data } = res.data
 
-    return Object.assign({}, response, {
+    return Object.assign({}, res, {
       data, // expecting object with ID
     })
   },

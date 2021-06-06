@@ -4,6 +4,7 @@
       <data-tables
         :data="suppliers"
         :filters="filters"
+        :loading="isLoading"
         layout="tool, table, pagination"
       >
         <template #tool>
@@ -63,14 +64,19 @@
     </el-card>
 
     <el-drawer
-      :title="drawerTitle"
+      ref="drawer"
       :visible.sync="drawerShow"
+      :with-header="false"
       size="40%"
       destroy-on-close
       direction="rtl"
     >
-      <add-supplier-drawer v-if="addDrawerShow" />
-      <edit-supplier-drawer v-if="editDrawerShow" :id="selectedIndex" />
+      <add-supplier-drawer v-if="addDrawerShow" @completed="OnCompleted()" />
+      <edit-supplier-drawer
+        v-if="editDrawerShow"
+        :id="selectedIndex"
+        @completed="OnCompleted()"
+      />
     </el-drawer>
   </div>
 </template>
@@ -124,6 +130,9 @@ export default {
       fetchSuppliers: 'fetchList',
       deleteSupplier: 'destroy',
     }),
+    OnCompleted() {
+      this.$refs.drawer.closeDrawer()
+    },
     queryChanged(value) {
       this.filters = [{ prop: 'name', value }]
     },

@@ -1,24 +1,35 @@
 <template>
   <el-form
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
     label-width="130px"
+    label-position="left"
     class="demo-ruleForm"
   >
-    <el-form-item label="User name" prop="username">
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Tambah User</p>
+      <el-tag type="success" size="small">_</el-tag>
+    </div>
+    <el-form-item label="Nama pengguna" prop="username">
       <el-input v-model="ruleForm.username"></el-input>
     </el-form-item>
-    <el-form-item label="Full name" prop="fullName">
+    <el-form-item label="Nama lengkap" prop="fullName">
       <el-input v-model="ruleForm.fullName"></el-input>
     </el-form-item>
-    <el-form-item label="Address" prop="address">
+    <el-form-item label="Alamat" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
-    <el-form-item label="Role" prop="role">
+    <el-form-item label="Wewenang" prop="role">
       <el-radio-group v-model="ruleForm.role">
-        <el-radio-button label="SuperAdmin" name="role"></el-radio-button>
         <el-radio-button label="Supervisor" name="role"></el-radio-button>
         <el-radio-button label="Manager" name="role"></el-radio-button>
         <el-radio-button label="Customer" name="role"></el-radio-button>
@@ -27,7 +38,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Create</el-button
+        >Tambah</el-button
       >
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
     </el-form-item>
@@ -50,39 +61,39 @@ export default {
         fullName: [
           {
             required: true,
-            message: 'Please input Full Name',
+            message: 'Silakan masukan nama lengkap',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
         username: [
           {
             required: true,
-            message: 'Please input Username',
+            message: 'Silakan masukkan nama pengguna',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
         address: [
           {
             required: true,
-            message: 'Please input Address',
+            message: 'Silakan masukan Alamat',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 200,
-            message: 'Length should be 5 to 200',
+            message: 'Panjangnya harus 5 hingga 200',
             trigger: 'blur',
           },
         ],
@@ -91,7 +102,7 @@ export default {
   },
   computed: {
     ...mapGetters('users', {
-      products: 'list',
+      users: 'list',
       isLoading: 'isLoading',
     }),
     ...mapState([
@@ -100,13 +111,14 @@ export default {
   },
   methods: {
     ...mapActions('users', {
-      addProduct: 'create',
+      addUser: 'create',
     }),
 
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.addProduct({ data: this.ruleForm })
+          this.addUser({ data: this.ruleForm })
+          this.$refs.drawer.closeDrawer()
         } else {
           this.$message({
             message: 'Error Adding User.',

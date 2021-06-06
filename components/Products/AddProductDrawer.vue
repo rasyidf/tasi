@@ -1,22 +1,42 @@
 <template>
   <el-form
     ref="ruleForm"
-    style="margin-left: 8px; margin-right: 32px"
+    style="margin-left: 16px; margin-right: 32px"
     :model="ruleForm"
     :rules="rules"
+    label-position="left"
     label-width="130px"
     class="demo-ruleForm"
   >
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Tambah Produk</p>
+      <el-tag type="success" size="small">_</el-tag>
+    </div>
     <el-form-item label="Barcode" prop="barcode">
-      <el-input v-model="ruleForm.barcode"></el-input>
+      <el-input
+        v-model="ruleForm.barcode"
+        maxlength="43"
+        show-word-limit
+      ></el-input>
     </el-form-item>
-    <el-form-item label="Product name" prop="name">
-      <el-input v-model="ruleForm.name"></el-input>
+    <el-form-item label="Nama Produk" prop="name">
+      <el-input
+        v-model="ruleForm.name"
+        maxlength="50"
+        show-word-limit
+      ></el-input>
     </el-form-item>
-    <el-form-item label="Manufactured" prop="canManufacture">
+    <el-form-item label="Diproduksi" prop="canManufacture">
       <el-switch v-model="ruleForm.canManufacture"></el-switch>
     </el-form-item>
-    <el-form-item label="Unit" prop="unit">
+    <el-form-item label="Satuan" prop="unit">
       <el-radio-group v-model="ruleForm.unit">
         <el-radio-button label="Piece" name="unit"></el-radio-button>
         <el-radio-button label="Bottle" name="unit"></el-radio-button>
@@ -24,15 +44,15 @@
         <el-radio-button label="Gallon" name="unit"></el-radio-button>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="Weight" prop="weight">
+    <el-form-item label="Bobot" prop="weight">
       <el-input v-model="ruleForm.weight" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Price" prop="price">
+    <el-form-item label="Harga" prop="price">
       <el-input v-model="ruleForm.price" type="number"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Create</el-button
+        >Tambah</el-button
       >
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
     </el-form-item>
@@ -56,55 +76,55 @@ export default {
       rules: {
         barcode: [
           {
-            required: false,
-            message: 'Please input Barcode',
+            required: true,
+            message: 'Silakan masukkan barcode.',
             trigger: 'blur',
           },
           {
-            min: 10,
-            max: 11,
-            message: 'Length should be 10 to 11',
+            min: 5,
+            max: 43,
+            message: 'Panjangnya harus 5 hingga 43',
             trigger: 'blur',
           },
         ],
         name: [
           {
             required: true,
-            message: 'Please input Product name',
+            message: 'Silakan masukan nama produk',
             trigger: 'blur',
           },
           {
             min: 5,
             max: 50,
-            message: 'Length should be 5 to 50',
+            message: 'Panjangnya harus 5 hingga 50',
             trigger: 'blur',
           },
         ],
         unit: [
           {
             required: true,
-            message: 'Please select one unit',
+            message: 'Silakan pilih satu unit',
             trigger: 'change',
           },
         ],
         canManufacture: [
           {
             required: true,
-            message: 'Please specify if its can be manufactured',
+            message: 'Silakan tentukan apakah produk dapat diproduksi',
             trigger: 'blur',
           },
         ],
         price: [
           {
             required: true,
-            message: 'Please input price',
+            message: 'Silakan masukan Harga produk.',
             trigger: 'blur',
           },
         ],
         weight: [
           {
             required: true,
-            message: 'Please input product weight',
+            message: 'Silakan masukkan berat produk',
             trigger: 'blur',
           },
         ],
@@ -129,9 +149,14 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.addProduct({ data: this.ruleForm })
+          this.$message({
+            message: 'Produk berhasil ditambahkan.',
+            type: 'success',
+          })
+          this.$emit('completed')
         } else {
           this.$message({
-            message: 'Error Updating Product.',
+            message: 'Terjadi kesalahan saat menambah Produk.',
             type: 'warning',
           })
           return false

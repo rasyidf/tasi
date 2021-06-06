@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <el-page-header :content="ChildName" @back="goBack"> </el-page-header>
+    <el-page-header
+      class="no-print"
+      :content="ChildName"
+      style="margin-bottom: 2em"
+      @back="goBack"
+    >
+    </el-page-header>
 
     <NuxtChild />
   </div>
@@ -19,9 +25,9 @@ export default {
         case 'report-items':
           return 'Laporan Produk'
         case 'report-manufacture':
-          return 'Laporan Mmanufaktur'
-        case 'report-stocks':
-          return 'Laporan Stok'
+          return 'Laporan Manufaktur'
+        case 'report-transactions':
+          return 'Laporan Transaksi'
         default:
           return this.$route.name
       }
@@ -38,12 +44,12 @@ export default {
 </script>
 
 <style>
-.main_content {
+/* .main_content {
   padding: 0;
   height: calc(100vh - 216px);
   display: flex;
   align-content: center;
   justify-content: center;
   background: url('/empty.png') no-repeat center;
-}
+} */
 </style>
