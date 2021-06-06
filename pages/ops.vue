@@ -16,6 +16,8 @@ export default {
           return 'Pesanan'
         case 'ops-manufacture':
           return 'Manufaktur'
+        case 'ops-orders-add':
+          return 'Pesanan Baru'
         default:
           return this.$route.name
       }
@@ -23,9 +25,15 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.push({
-        path: '/',
-      })
+      if (this.$route.name === 'ops-orders-add') {
+        this.$router.push({
+          path: '/ops/orders',
+        })
+      } else {
+        this.$router.push({
+          path: '/',
+        })
+      }
     },
   },
 }
