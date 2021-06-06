@@ -14,7 +14,12 @@
             @queryChanged="queryChanged($event)"
           ></toolbar>
         </template>
-        <el-table-column label="Id">
+        <el-table-column
+          label="Id"
+          width="50"
+          header-align="center"
+          style="margin-left: 10px"
+        >
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.userId }}</span>
           </template>

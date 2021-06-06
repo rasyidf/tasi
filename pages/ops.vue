@@ -21,6 +21,10 @@ export default {
           return 'Pesanan Baru'
         case 'ops-manufacture-add':
           return 'Ajukan Manufaktur'
+        case 'ops-orders-id':
+          return 'Detail Pesanan'
+        case 'ops-manufacture-id':
+          return 'Detail Manufaktur'
         default:
           return this.$route.name
       }
@@ -28,18 +32,24 @@ export default {
   },
   methods: {
     goBack() {
-      if (this.$route.name === 'ops-orders-add') {
-        this.$router.push({
-          path: '/ops/orders',
-        })
-      } else if (this.$route.name === 'ops-manufacture-add') {
-        this.$router.push({
-          path: '/ops/manufacture',
-        })
-      } else {
-        this.$router.push({
-          path: '/',
-        })
+      switch (this.$route.name) {
+        case 'ops-orders-add':
+        case 'ops-orders-id':
+          this.$router.push({
+            path: '/ops/orders',
+          })
+          break
+        case 'ops-manufacture-add':
+        case 'ops-manufacture-id':
+          this.$router.push({
+            path: '/ops/manufacture',
+          })
+          break
+        default:
+          this.$router.push({
+            path: '/',
+          })
+          break
       }
     },
   },

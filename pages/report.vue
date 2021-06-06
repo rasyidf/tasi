@@ -7,7 +7,35 @@
       @back="goBack"
     >
     </el-page-header>
-
+    <div
+      style="display: flex; flex-orientation: column; justify-content: center"
+    >
+      <h2>{{ ChildName }}</h2>
+    </div>
+    <el-row>
+      <el-col span="8">
+        <el-row>
+          <el-col span="8"> <p>Dicetak Tanggal</p></el-col>
+          <el-col span="16">
+            <p>: {{ Date() }}</p></el-col
+          >
+        </el-row>
+      </el-col>
+      <el-col span="8"></el-col>
+      <el-col span="8"></el-col>
+    </el-row>
+    <el-row>
+      <el-col span="8">
+        <el-row>
+          <el-col span="8"> <p>Dicetak Oleh</p></el-col>
+          <el-col span="16"
+            ><p>: {{ $store.state.auth.user.fullName }}</p></el-col
+          >
+        </el-row>
+      </el-col>
+      <el-col span="8"></el-col>
+      <el-col span="8"></el-col>
+    </el-row>
     <NuxtChild />
   </div>
 </template>

@@ -26,12 +26,8 @@
     </el-col>
     <el-col :xs="0" :sm="2" :md="6" :lg="10" :xl="12"><br /></el-col>
     <el-col :xs="6" :sm="6" :md="6" :lg="4" :xl="4"
-      ><el-button
-        size="medium"
-        style="width: 100%"
-        @click="$emit('addItem', '')"
-      >
-        Tambah
+      ><el-button size="medium" style="width: 100%" @click="$emit('reset', '')">
+        Reset
       </el-button></el-col
     >
   </el-row>

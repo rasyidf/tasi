@@ -6,7 +6,10 @@
           class="products-card"
           style="height: calc(100vh - 210px); padding-left: 0.5em"
         >
-          <order-toolbar @select="OnSelectItem($event)"></order-toolbar>
+          <order-toolbar
+            @select="OnSelectItem($event)"
+            @reset="ResetForm()"
+          ></order-toolbar>
           <el-row :gutter="20">
             <el-col :span="24">
               <el-table

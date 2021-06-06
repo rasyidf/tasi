@@ -35,7 +35,11 @@
           <div slot="header">
             <span>Bahan</span>
           </div>
-          <data-tables :data="data.materials" layout="table">
+          <data-tables
+            :data="data.materials"
+            :loading="$fetchState.pending"
+            layout="table"
+          >
             <el-table-column label="Tanggal" width="200">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
@@ -94,13 +98,19 @@ export default {
     const data = await $axios.$get(
       `https://tasi-backend.azurewebsites.net/api/manufacture/${slug}`
     )
-    const products = {}
     const order = data.data
-    if (order.materials) {
-      order.materials.forEach(async (el) => {
+    return { slug, data: order }
+  },
+  data() {
+    return { products: {} }
+  },
+  fetch() {
+    const products = {}
+    if (this.data.materials) {
+      this.data.materials.forEach(async (el) => {
         if (!(el.productId in products)) {
           try {
-            const pd = await $axios.$get(
+            const pd = await this.$axios.$get(
               `https://tasi-backend.azurewebsites.net/api/products/${el.productId}`
             )
             products[el.productId] = pd.data
@@ -110,11 +120,12 @@ export default {
         }
       })
     }
-    return { slug, data: order, products }
+    this.products = products
+    this.$forceUpdate()
   },
   methods: {
     getProductById(id) {
-      return this.products[id]
+      return this.products[id]?.name
     },
     getColorInID(value) {
       switch (value) {
