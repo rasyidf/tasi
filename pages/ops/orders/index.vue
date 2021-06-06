@@ -14,7 +14,7 @@
             @queryChanged="queryChanged($event)"
           ></toolbar>
         </template>
-        <el-table-column label="modifiedDate">
+        <el-table-column label="Tanggal Dibuat">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
           </template>
@@ -22,6 +22,11 @@
         <el-table-column label="Tipe">
           <template slot-scope="scope">
             <el-tag size="medium">{{ scope.row.type }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="Harga">
+          <template slot-scope="scope">
+            <span size="medium">{{ scope.row.subTotal }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Status Terakhir">

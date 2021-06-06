@@ -162,7 +162,7 @@ export default {
         })
         return
       }
-      // this.deleteUser({ id: index + 1 })
+      this.deleteUser({ id: index + 1 })
       this.$message({
         message: 'Pengguna berhasil di hapus.',
         type: 'success',
