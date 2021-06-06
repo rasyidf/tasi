@@ -28,6 +28,22 @@
     <el-form-item label="Address" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
+    <el-form-item>
+      <el-button
+        type="default"
+        size="medium"
+        icon="el-icon-location-outline"
+        :disabled="ruleForm.address === ''"
+        @click="lookup()"
+        >Cari</el-button
+      >
+    </el-form-item>
+    <el-form-item label="Latitude" prop="latitude">
+      <el-input v-model="ruleForm.latitude" type="text"></el-input>
+    </el-form-item>
+    <el-form-item label="Longitude" prop="longitude">
+      <el-input v-model="ruleForm.longitude" type="text"></el-input>
+    </el-form-item>
     <el-form-item label="Role" prop="role">
       <el-radio-group v-model="ruleForm.role">
         <el-radio-button label="Supervisor" name="role"></el-radio-button>
@@ -131,6 +147,31 @@ export default {
       updateUsers: 'replace',
       fetchUsers: 'fetchSingle',
     }),
+    async GetLocationAsync() {
+      const location = await this.$axios.$get(
+        'https://tasi-backend.azurewebsites.net/api/maps/lookup',
+        { params: { address: this.ruleForm.address } }
+      )
+
+      return location.data
+    },
+    async lookup() {
+      const location = await this.GetLocationAsync()
+      if (location) {
+        this.$message({
+          message: 'Lokasi Ditemukan, memperbarui data',
+          type: 'success',
+        })
+        this.ruleForm.address = location.geocodedAddress
+        this.ruleForm.latitude = location.latitude
+        this.ruleForm.longitude = location.longitude
+      } else {
+        this.$message({
+          message: 'Error Mencari Lokasi.',
+          type: 'warning',
+        })
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -139,7 +180,7 @@ export default {
             message: 'Informasi Pengguna berhasil diperbarui.',
             type: 'success',
           })
-          this.$refs.drawer.closeDrawer()
+          this.$emit('completed')
           return true
         } else {
           this.$message({

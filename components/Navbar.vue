@@ -26,7 +26,7 @@
         <el-menu-item index="/report/manufacture"
           >Transaksi Manufaktur</el-menu-item
         >
-        <el-menu-item index="/report/stocks">Stok Barang</el-menu-item>
+        <el-menu-item index="/report/transactions">Transactions</el-menu-item>
         <el-menu-item index="/report/audit_user">Audit Pengguna</el-menu-item>
         <el-menu-item index="/report/audit_supplier"
           >Audit Supplier</el-menu-item

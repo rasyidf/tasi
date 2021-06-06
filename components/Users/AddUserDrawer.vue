@@ -28,6 +28,30 @@
     <el-form-item label="Alamat" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
+    <el-form-item>
+      <el-button
+        type="default"
+        size="medium"
+        icon="el-icon-location-outline"
+        :disabled="ruleForm.address === ''"
+        @click="lookup()"
+        >Cari</el-button
+      >
+    </el-form-item>
+    <el-form-item label="Latitude" prop="latitude">
+      <el-input
+        v-model="ruleForm.latitude"
+        type="text"
+        autocomplete="off"
+      ></el-input>
+    </el-form-item>
+    <el-form-item label="Longitude" prop="longitude">
+      <el-input
+        v-model="ruleForm.longitude"
+        type="text"
+        autocomplete="off"
+      ></el-input>
+    </el-form-item>
     <el-form-item label="Wewenang" prop="role">
       <el-radio-group v-model="ruleForm.role">
         <el-radio-button label="Supervisor" name="role"></el-radio-button>
@@ -36,6 +60,13 @@
       </el-radio-group>
     </el-form-item>
 
+    <el-form-item label="Kata Sandi" prop="password">
+      <el-input
+        v-model="ruleForm.password"
+        placeholder="Silahkan Masukkan Password"
+        show-password
+      ></el-input>
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
         >Tambah</el-button
@@ -52,8 +83,10 @@ export default {
       loading: false,
       ruleForm: {
         address: '',
+        latitude: '',
+        longitude: '',
         fullName: '',
-        role: '',
+        role: 'Customer',
         userId: 0,
         username: '',
       },
@@ -97,6 +130,19 @@ export default {
             trigger: 'blur',
           },
         ],
+        password: [
+          {
+            required: true,
+            message: 'Silakan masukan Password',
+            trigger: 'blur',
+          },
+          {
+            min: 8,
+            max: 24,
+            message: 'Minimal 8 digit',
+            trigger: 'blur',
+          },
+        ],
       },
     }
   },
@@ -113,15 +159,39 @@ export default {
     ...mapActions('users', {
       addUser: 'create',
     }),
+    async GetLocationAsync() {
+      const location = await this.$axios.$get(
+        'https://tasi-backend.azurewebsites.net/api/maps/lookup',
+        { params: { address: this.ruleForm.address } }
+      )
 
+      return location.data
+    },
+    async lookup() {
+      const location = await this.GetLocationAsync()
+      if (location) {
+        this.$message({
+          message: 'Lokasi Ditemukan, memperbarui data',
+          type: 'success',
+        })
+        this.ruleForm.address = location.geocodedAddress
+        this.ruleForm.latitude = location.latitude
+        this.ruleForm.longitude = location.longitude
+      } else {
+        this.$message({
+          message: 'Error Mencari Lokasi.',
+          type: 'warning',
+        })
+      }
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.addUser({ data: this.ruleForm })
-          this.$refs.drawer.closeDrawer()
+          this.$emit('completed')
         } else {
           this.$message({
-            message: 'Error Adding User.',
+            message: 'Error Menambahkan User.',
             type: 'warning',
           })
           return false
