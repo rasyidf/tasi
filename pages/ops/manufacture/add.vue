@@ -50,63 +50,36 @@
           class="order__card"
           style="height: calc(100vh - 210px); padding-left: 0.5em"
           ><el-container style="height: 100%">
-            <el-header><h1>Order</h1></el-header>
+            <el-header><h1 style="margin-left: 0.5em">Order</h1></el-header>
             <el-main>
-              <el-form>
-                <el-form-item label="Mode">
-                  <el-radio-group v-model="ruleForm.mode">
-                    <el-radio-button
-                      label="Supplier"
-                      name="mode"
-                    ></el-radio-button>
-                    <el-radio-button
-                      label="Pelanggan"
-                      name="mode"
-                    ></el-radio-button>
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item v-if="!OrderMode" label="User">
-                  <el-select
-                    v-model="ruleForm.user"
-                    clearable
-                    placeholder="Select"
+              <el-form label-position="left">
+                <el-form-item label="Produce Qty">
+                  <el-input-number
+                    v-model="ruleForm.expectedProduce"
+                    size="normal"
+                    label="Product"
+                    :min="1"
+                    :max="100"
+                    :step="1"
+                    :controls="true"
+                    controls-position="right"
                   >
-                    <el-option
-                      v-for="item in users"
-                      :key="item.userId"
-                      :label="item.fullName"
-                      :value="item.userId"
-                    >
-                    </el-option>
-                  </el-select>
+                  </el-input-number>
                 </el-form-item>
-                <el-form-item v-if="OrderMode" label="Supplier">
-                  <el-select
-                    v-model="ruleForm.supplier"
-                    clearable
-                    placeholder="Select"
+                <el-form-item label="Completion (ETA)">
+                  <el-date-picker
+                    v-model="ruleForm.expectedCompletion"
+                    type="date"
+                    placeholder="Pilih tanggal"
                   >
-                    <el-option
-                      v-for="item in suppliers"
-                      :key="item.supplierId"
-                      :label="item.name"
-                      :value="item.supplierId"
-                    >
-                    </el-option>
-                  </el-select>
+                  </el-date-picker>
                 </el-form-item>
-                <el-table :data="tableData" style="width: 100%">
-                  <el-table-column prop="name" label="Name" width="180">
-                  </el-table-column>
-                  <el-table-column prop="address" label="Address">
-                  </el-table-column>
-                </el-table>
 
                 <el-button
                   type="success"
                   icon="el-icon-shopping-cart-full"
                   @click="onOrderClick"
-                  >Pesan Sekarang</el-button
+                  >Produksi</el-button
                 >
               </el-form>
             </el-main>
@@ -128,9 +101,7 @@ export default {
   data() {
     return {
       tableData: [],
-      users: [],
-      suppliers: [],
-      ruleForm: { mode: 'Supplier', user: '', supplier: '' },
+      ruleForm: { user: '', supplier: '' },
     }
   },
   computed: {
@@ -157,34 +128,32 @@ export default {
     ...mapActions('products', {
       fetchProduct: 'fetchSingle',
     }),
-    getOrderUrl() {
-      const base = 'https://tasi-backend.azurewebsites.net/api/orders'
-      if (this.ruleForm.mode === 'Supplier') {
-        return `${base}/supplier`
-      } else {
-        return `${base}/sales`
-      }
-    },
     async onOrderClick() {
-      const url = this.getOrderUrl()
-      const user = this.ruleForm.user
-      const supplier = this.ruleForm.supplier
+      const url = 'https://tasi-backend.azurewebsites.net/api/manufacture'
       const products = []
+      if (this.tableData.length === 0) {
+        this.$message({
+          message: 'Anda harus menambahkan minimal satu item.',
+          type: 'information',
+        })
+        return
+      }
       for (let index = 0; index < this.tableData.length; index++) {
         const element = this.tableData[index]
         products.push({ productId: element.productId, quantity: element.qty })
       }
-      if (this.OrderMode) {
-        // supplier
-        const order = await this.$axios.$post(url, {
-          supplierId: supplier,
-          products,
-        })
-        console.log(order)
-      } else {
-        const order = await this.$axios.$post(url, { userId: user, products })
-        console.log(order)
-      }
+      await this.$axios.$post(url, {
+        productId: this.ruleForm.ManufacturedProduct,
+        expectedProduce: this.ruleForm.expectedProduce,
+        expectedCompletion: this.ruleForm.completion,
+        materials: products,
+      })
+      this.$message({
+        message: 'Berhasil Melakukan Request Produksi.',
+        type: 'success',
+      })
+
+      this.ResetForm()
     },
     async FetchUsers() {
       const users = await this.$axios.$get(
@@ -197,6 +166,10 @@ export default {
         `https://tasi-backend.azurewebsites.net/api/suppliers`
       )
       this.suppliers = suppliers.data.data
+    },
+    ResetForm() {
+      this.tableData = []
+      this.ruleForm = { mode: 'Supplier', user: '', supplier: '' }
     },
     async OnSelectItem(item) {
       try {

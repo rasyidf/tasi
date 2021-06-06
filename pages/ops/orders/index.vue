@@ -31,25 +31,30 @@
         </el-table-column>
         <el-table-column label="Status Terakhir">
           <template slot-scope="scope">
-            {{ scope.row.lastStatus.code }}
+            {{ getStatusInID(scope.row.lastStatus.code) }}
           </template>
         </el-table-column>
-        <el-table-column fixed="right" width="300">
+        <el-table-column fixed="right" width="350">
           <template slot="header"> Operasi </template>
           <template slot-scope="scope">
             <el-button
               size="mini"
               icon="el-icon-info"
-              @click="handleStepBack(scope.$index + 1, scope.row)"
+              plain
+              @click="handleDetails(scope.$index + 1, scope.row)"
               >Details</el-button
             >
             <el-button
               size="mini"
-              icon="el-icon-right"
+              plain
+              :type="getColorInID(scope.row.lastStatus.code)"
+              :icon="getIconInID(scope.row.lastStatus.code)"
               @click="handleStepForward(scope.$index + 1, scope.row)"
-              >Prosess</el-button
             >
+              {{ getNextStep(scope.row.lastStatus.code) }}
+            </el-button>
             <el-popconfirm
+              v-if="getNextStep(scope.row.lastStatus.code) === 'Kirim'"
               confirm-button-text="Ya"
               cancel-button-text="Tidak"
               icon="el-icon-info"
@@ -84,7 +89,20 @@
 <script>
 import { mapGetters, mapState, mapActions } from 'vuex'
 import Toolbar from '../../../components/Toolbar.vue'
-
+const code = {
+  0: 'Pesanan disimpan dan menunggu diproses.',
+  1: 'Pesanan sedang di proses',
+  2: 'Pesanan dalam pengiriman',
+  3: 'Pesanan Selesai',
+  4: 'Pesanan Dibatalkan',
+}
+const order = {
+  Requested: 0,
+  InProcess: 1,
+  Deliver: 2,
+  Completed: 3,
+  Cancelled: 4,
+}
 export default {
   components: { Toolbar },
   data() {
@@ -105,15 +123,6 @@ export default {
     ...mapState([
       'route', // vuex-router-sync
     ]),
-    drawerTitle() {
-      if (this.addDrawerShow) {
-        return 'Tambahkan pengguna'
-      }
-      if (this.editDrawerShow) {
-        return 'Edit Pengguna [ ' + this.selectedIndex + ' ]'
-      }
-      return 'Pengguna'
-    },
   },
 
   async created() {
@@ -130,6 +139,58 @@ export default {
     queryChanged(value) {
       this.filters = [{ prop: 'name', value }]
     },
+    getIconInID(value) {
+      switch (value) {
+        case 'Requested':
+        case 'InProcess':
+        case 'Delivery':
+          return 'el-icon-right'
+        case 'Completed':
+          return 'el-icon-check'
+        case 'Cancelled':
+          return 'el-icon-close'
+      }
+    },
+    getColorInID(value) {
+      switch (value) {
+        case 'Requested':
+        case 'InProcess':
+        case 'Delivery':
+          return 'default'
+        case 'Completed':
+          return 'success'
+        case 'Cancelled':
+          return 'danger'
+      }
+    },
+    getStatusInID(value) {
+      switch (value) {
+        case 'Requested':
+          return 'Dipesan'
+        case 'InProcess':
+          return 'Dalam Proses'
+        case 'Delivery':
+          return 'Dikirim'
+        case 'Completed':
+          return 'Selesai'
+        case 'Cancelled':
+          return 'Dibatalkan'
+      }
+    },
+    getNextStep(value) {
+      switch (value) {
+        case 'Requested':
+          return 'Proses'
+        case 'InProcess':
+          return 'Kirim'
+        case 'Delivery':
+          return 'Konfirmasi'
+        case 'Completed':
+          return 'Selesai'
+        case 'Cancelled':
+          return 'Dibatalkan'
+      }
+    },
     ActivateDrawer(key) {
       if (key === 'add') {
         this.editDrawerShow = false
@@ -143,17 +204,50 @@ export default {
     fetchData() {
       return this.fetchUsers()
     },
-    handleStepBack(index, row) {
+    handleDetails(index, row) {
       this.selectedIndex = index
+      this.$router.push(`/ops/orders/${row.orderId}`)
     },
-    handleStepForward(index, row) {
-      this.selectedIndex = index
+    async handleStepForward(index, row) {
+      try {
+        const codes = order[row.lastStatus.code] + 1
+        if (codes > 3) return
+        const proses = await this.$axios.$post(
+          `https://tasi-backend.azurewebsites.net/api/orders/${row.orderId}/process`,
+          { code: codes, message: code[codes] }
+        )
+        if (proses) {
+          this.$message({
+            message: 'Pemindahan proses berhasil.',
+            type: 'success',
+          })
+        }
+        this.fetchData()
+      } catch (er) {
+        this.$message({
+          message: er.message,
+          type: 'warning',
+        })
+      }
     },
-    handleDelete(index, row) {
-      this.$message({
-        message: 'Pengguna berhasil di hapus.',
-        type: 'success',
-      })
+    async handleDelete(index, row) {
+      try {
+        const hapus = await this.$axios.$post(
+          `https://tasi-backend.azurewebsites.net/api/orders/${row.orderId}/process`,
+          { code: 4, message: code[4] }
+        )
+        if (hapus.data) {
+          this.$message({
+            message: 'Pesanan berhasil dibatalkan.',
+            type: 'success',
+          })
+        }
+      } catch (er) {
+        this.$message({
+          message: er.message,
+          type: 'warning',
+        })
+      }
     },
     handleAdd() {
       this.$router.push('/ops/orders/add')

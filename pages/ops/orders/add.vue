@@ -95,12 +95,6 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-table :data="tableData" style="width: 100%">
-                  <el-table-column prop="name" label="Name" width="180">
-                  </el-table-column>
-                  <el-table-column prop="address" label="Address">
-                  </el-table-column>
-                </el-table>
 
                 <el-button
                   type="success"
@@ -170,21 +164,36 @@ export default {
       const user = this.ruleForm.user
       const supplier = this.ruleForm.supplier
       const products = []
+      if (this.tableData.length === 0) {
+        this.$message({
+          message: 'Anda harus menambahkan minimal satu item.',
+          type: 'information',
+        })
+        return
+      }
       for (let index = 0; index < this.tableData.length; index++) {
         const element = this.tableData[index]
         products.push({ productId: element.productId, quantity: element.qty })
       }
       if (this.OrderMode) {
         // supplier
-        const order = await this.$axios.$post(url, {
+        await this.$axios.$post(url, {
           supplierId: supplier,
           products,
         })
-        console.log(order)
+        this.$message({
+          message: 'Berhasil Menambahkan Transaksi ke Supplier.',
+          type: 'success',
+        })
       } else {
-        const order = await this.$axios.$post(url, { userId: user, products })
-        console.log(order)
+        await this.$axios.$post(url, { userId: user, products })
+        this.$message({
+          message: 'Berhasil Menambahkan Transaksi penjualan.',
+          type: 'success',
+        })
       }
+
+      this.ResetForm()
     },
     async FetchUsers() {
       const users = await this.$axios.$get(
@@ -197,6 +206,10 @@ export default {
         `https://tasi-backend.azurewebsites.net/api/suppliers`
       )
       this.suppliers = suppliers.data.data
+    },
+    ResetForm() {
+      this.tableData = []
+      this.ruleForm = { mode: 'Supplier', user: '', supplier: '' }
     },
     async OnSelectItem(item) {
       try {
