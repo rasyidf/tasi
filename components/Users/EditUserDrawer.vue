@@ -8,6 +8,17 @@
     label-position="left"
     label-width="130px"
   >
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Sunting User</p>
+      <el-tag size="small">{{ id }}</el-tag>
+    </div>
     <el-form-item label="User name" prop="username">
       <el-input v-model="ruleForm.username"></el-input>
     </el-form-item>
@@ -27,7 +38,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Memperbarui</el-button
+        >Perbarui</el-button
       >
     </el-form-item>
   </el-form>
@@ -146,7 +157,6 @@ export default {
     fetchData() {
       const data = this.fetchUsers({
         id: this.id,
-        customUrl: 'https://tasi-backend.azurewebsites.net/api/users',
       })
       return data
     },

@@ -8,16 +8,27 @@
     label-width="130px"
     class="demo-ruleForm"
   >
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Tambah Produk</p>
+      <el-tag type="success" size="small">_</el-tag>
+    </div>
     <el-form-item label="Barcode" prop="barcode">
       <el-input v-model="ruleForm.barcode"></el-input>
     </el-form-item>
-    <el-form-item label="Product name" prop="name">
+    <el-form-item label="Nama Produk" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="Manufactured" prop="canManufacture">
+    <el-form-item label="Diproduksi" prop="canManufacture">
       <el-switch v-model="ruleForm.canManufacture"></el-switch>
     </el-form-item>
-    <el-form-item label="Unit" prop="unit">
+    <el-form-item label="Satuan" prop="unit">
       <el-radio-group v-model="ruleForm.unit">
         <el-radio-button label="Piece" name="unit"></el-radio-button>
         <el-radio-button label="Bottle" name="unit"></el-radio-button>
@@ -25,15 +36,15 @@
         <el-radio-button label="Gallon" name="unit"></el-radio-button>
       </el-radio-group>
     </el-form-item>
-    <el-form-item label="Weight" prop="weight">
+    <el-form-item label="Bobot" prop="weight">
       <el-input v-model="ruleForm.weight" type="number"></el-input>
     </el-form-item>
-    <el-form-item label="Price" prop="price">
+    <el-form-item label="Harga" prop="price">
       <el-input v-model="ruleForm.price" type="number"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Create</el-button
+        >Tambah</el-button
       >
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
     </el-form-item>

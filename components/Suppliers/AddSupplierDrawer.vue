@@ -8,15 +8,26 @@
     label-width="130px"
     class="demo-ruleForm"
   >
-    <el-form-item label="Supplier name" prop="name">
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Tambah Supplier</p>
+      <el-tag type="success" size="small">_</el-tag>
+    </div>
+    <el-form-item label="Nama Supplier" prop="name">
       <el-input v-model="ruleForm.name"></el-input>
     </el-form-item>
-    <el-form-item label="Address" prop="address">
+    <el-form-item label="Alamat" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Create</el-button
+        >Tambah</el-button
       >
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
     </el-form-item>

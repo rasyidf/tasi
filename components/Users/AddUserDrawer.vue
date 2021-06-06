@@ -8,18 +8,28 @@
     label-position="left"
     class="demo-ruleForm"
   >
-    <el-form-item label="User name" prop="username">
+    <div
+      style="
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.3em;
+      "
+    >
+      <p>Tambah User</p>
+      <el-tag type="success" size="small">_</el-tag>
+    </div>
+    <el-form-item label="Nama pengguna" prop="username">
       <el-input v-model="ruleForm.username"></el-input>
     </el-form-item>
-    <el-form-item label="Full name" prop="fullName">
+    <el-form-item label="Nama lengkap" prop="fullName">
       <el-input v-model="ruleForm.fullName"></el-input>
     </el-form-item>
-    <el-form-item label="Address" prop="address">
+    <el-form-item label="Alamat" prop="address">
       <el-input v-model="ruleForm.address" type="textarea"></el-input>
     </el-form-item>
-    <el-form-item label="Role" prop="role">
+    <el-form-item label="Wewenang" prop="role">
       <el-radio-group v-model="ruleForm.role">
-        <el-radio-button label="SuperAdmin" name="role"></el-radio-button>
         <el-radio-button label="Supervisor" name="role"></el-radio-button>
         <el-radio-button label="Manager" name="role"></el-radio-button>
         <el-radio-button label="Customer" name="role"></el-radio-button>
@@ -28,7 +38,7 @@
 
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')"
-        >Create</el-button
+        >Tambah</el-button
       >
       <el-button @click="resetForm('ruleForm')">Reset</el-button>
     </el-form-item>
