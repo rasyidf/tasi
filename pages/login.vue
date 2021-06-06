@@ -93,8 +93,6 @@ export default {
         })
 
         this.$auth.setUser(response)
-        // eslint-disable-next-line no-console
-        console.log(this.$auth.user)
         this.$message({
           title: 'Logged In',
           message: 'Anda sekarang masuk',

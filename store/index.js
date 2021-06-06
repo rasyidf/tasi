@@ -10,7 +10,9 @@ export const getters = {
   isAuthenticated(state) {
     return state.auth.loggedIn
   },
-
+  isSuperAdmin(state) {
+    return state.auth.user.role === 'SuperAdmin'
+  },
   loggedInUser(state) {
     return state.auth.user
   },

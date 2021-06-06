@@ -1,7 +1,7 @@
 <template>
   <el-main class="dashboard">
-    <h3>Manajemen</h3>
-    <el-row :gutter="20">
+    <h3 v-if="isSuperAdmin">Manajemen</h3>
+    <el-row v-if="isSuperAdmin" :gutter="20">
       <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="manage/items">
           <el-button icon="el-icon-takeaway-box">
@@ -45,7 +45,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="12">
+      <el-col v-if="isSuperAdmin" :xs="24" :sm="12">
         <nuxt-link to="ops/manufacture">
           <el-button icon="el-icon-box">
             <div class="content">
@@ -57,7 +57,7 @@
       </el-col>
     </el-row>
     <h3>Laporan</h3>
-    <el-row :gutter="20">
+    <el-row v-if="isSuperAdmin" :gutter="20">
       <el-col :xs="24" :sm="24" :lg="12">
         <nuxt-link to="report/items">
           <el-button icon="el-icon-notebook-2">
@@ -98,7 +98,7 @@
       </el-col>
     </el-row>
     <h3></h3>
-    <el-row :gutter="20">
+    <el-row v-if="isSuperAdmin" :gutter="20">
       <el-col :xs="24" :sm="12">
         <nuxt-link to="report/audit_user">
           <el-button icon="el-icon-notebook-1">
@@ -128,6 +128,11 @@
 <script>
 export default {
   layout: 'default',
+  computed: {
+    isSuperAdmin() {
+      return this.$store.state.auth.user.role === 'SuperAdmin'
+    },
+  },
 }
 </script>
 
