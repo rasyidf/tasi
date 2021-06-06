@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <el-page-header
+      class="no-print"
       :content="ChildName"
       style="margin-bottom: 2em"
       @back="goBack"

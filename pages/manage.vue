@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <el-page-header :content="ChildName" @back="goBack"> </el-page-header>
+    <el-page-header class="no-print" :content="ChildName" @back="goBack">
+    </el-page-header>
     <NuxtChild />
   </div>
 </template>
