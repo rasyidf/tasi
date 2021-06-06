@@ -5,11 +5,11 @@
         :data="orders"
         :filters="filters"
         :loading="isLoading"
-        layout="tool, table, pagination"
+        layout="tool, table"
       >
         <template #tool>
           <div>
-            <el-row style="margin: 1em">
+            <el-row style="margin: 1em" class="noprint">
               <el-col span="8">
                 <el-radio-group v-model="mode" @change="queryChanged(mode)">
                   <el-radio-button

@@ -1,5 +1,5 @@
 <template>
-  <el-card class="main_navbar p-0" shadow="always">
+  <el-card class="main_navbar p-0 noprint" shadow="always">
     <el-menu
       :default-active="$route.path"
       menu-trigger="click"

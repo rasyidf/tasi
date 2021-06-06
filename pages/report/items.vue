@@ -1,40 +1,43 @@
 <template>
   <div class="main_content">
-    <el-card class="p-0">
-      <data-tables :data="products" :filters="filters" :loading="isLoading">
-        <el-table-column label="Tanggal" width="200">
-          <template slot-scope="scope">
-            <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="Barcode" width="130">
-          <template slot-scope="scope">
-            <el-popover trigger="hover" placement="bottom">
-              <VueBarcode :value="scope.row.barcode" />
-              <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.barcode }}</el-tag>
-              </div>
-            </el-popover>
-          </template>
-        </el-table-column>
-        <el-table-column label="Nama">
-          <template slot-scope="scope">
-            {{ scope.row.name }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Harga">
-          <template slot-scope="scope">
-            {{ scope.row.price }}
-          </template>
-        </el-table-column>
-        <el-table-column label="Stok">
-          <template slot-scope="scope">
-            {{ scope.row.stock }} {{ scope.row.unit }}
-          </template>
-        </el-table-column>
-      </data-tables>
-    </el-card>
+    <data-tables
+      :data="products"
+      :filters="filters"
+      :loading="isLoading"
+      layout="table"
+    >
+      <el-table-column label="Tanggal" width="200">
+        <template slot-scope="scope">
+          <i class="el-icon-time"></i>
+          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Barcode" width="130">
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="bottom">
+            <VueBarcode :value="scope.row.barcode" />
+            <div slot="reference" class="name-wrapper">
+              <el-tag size="medium">{{ scope.row.barcode }}</el-tag>
+            </div>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column label="Nama">
+        <template slot-scope="scope">
+          {{ scope.row.name }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Harga">
+        <template slot-scope="scope">
+          {{ scope.row.price }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Stok">
+        <template slot-scope="scope">
+          {{ scope.row.stock }} {{ scope.row.unit }}
+        </template>
+      </el-table-column>
+    </data-tables>
   </div>
 </template>
 

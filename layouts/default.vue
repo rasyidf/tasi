@@ -44,4 +44,10 @@ html {
 .el-main {
   padding: 8px;
 }
+@media print {
+  .no-print,
+  .no-print * {
+    display: none !important;
+  }
+}
 </style>
