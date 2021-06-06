@@ -20,10 +20,18 @@
       <el-tag type="success" size="small">_</el-tag>
     </div>
     <el-form-item label="Barcode" prop="barcode">
-      <el-input v-model="ruleForm.barcode"></el-input>
+      <el-input
+        v-model="ruleForm.barcode"
+        maxlength="43"
+        show-word-limit
+      ></el-input>
     </el-form-item>
     <el-form-item label="Nama Produk" prop="name">
-      <el-input v-model="ruleForm.name"></el-input>
+      <el-input
+        v-model="ruleForm.name"
+        maxlength="50"
+        show-word-limit
+      ></el-input>
     </el-form-item>
     <el-form-item label="Diproduksi" prop="canManufacture">
       <el-switch v-model="ruleForm.canManufacture"></el-switch>

@@ -2,23 +2,21 @@
   <div class="container">
     <el-row :gutter="20">
       <el-col :span="18">
-        <el-card style="padding: 1em">
-          <el-row :gutter="20">
-            <el-col :span="12">
-              <el-input
-                size="mini"
-                placeholder="Scan barcode or Add Item"
-                prefix-icon="el-icon-search"
-              >
-              </el-input>
-            </el-col>
-            <el-col :span="12">
-              <el-button size="mini">Filter</el-button>
-            </el-col>
-          </el-row>
+        <el-card
+          class="products-card"
+          style="height: calc(100vh - 210px); padding-left: 0.5em"
+        >
+          <order-toolbar @select="OnSelectItem($event)"></order-toolbar>
           <el-row :gutter="20">
             <el-col :span="24">
-              <el-table :data="tableData" height="250" style="width: 100%">
+              <el-table
+                :data="tableData"
+                style="
+                  height: calc(100vh - 210px);
+                  padding-left: 0.5em;
+                  width: 100%;
+                "
+              >
                 <el-table-column prop="name" label="Item Name" width="180">
                 </el-table-column>
                 <el-table-column prop="price" label="Price" width="180">
@@ -31,7 +29,8 @@
                     <el-input-number
                       v-model="scope.row.qty"
                       :min="1"
-                      :max="10"
+                      value="1"
+                      :max="scope.row.stock"
                       size="mini"
                     ></el-input-number>
                   </template>
@@ -48,13 +47,15 @@
       </el-col>
       <el-col :span="6">
         <el-card
-          ><el-container>
-            <el-header style="padding-left: 1em"><h1>Order</h1></el-header>
+          class="order__card"
+          style="height: calc(100vh - 210px); padding-left: 0.5em"
+          ><el-container style="height: 100%">
+            <el-header><h1>Order</h1></el-header>
             <el-main>
               <el-row>
                 <el-col :span="6"> <h5>Total</h5> </el-col>
                 <el-col :span="18">
-                  <h4>Rp. {{ priceAll }}</h4>
+                  <h4>Rp.</h4>
                 </el-col>
               </el-row>
             </el-main>
@@ -71,36 +72,67 @@
 </template>
 
 <script>
+import { mapGetters, mapState, mapActions } from 'vuex'
+import OrderToolbar from '../../components/OrderToolbar.vue'
+
 export default {
+  components: {
+    OrderToolbar,
+  },
   data() {
     return {
-      tableData: [
-        {
-          name: 'Paper',
-          price: '50000',
-          qty: '1',
-        },
-        {
-          name: 'Pencil 1 Pack',
-          price: '50000',
-          qty: '1',
-        },
-        {
-          name: 'Ruler',
-          price: '40000',
-          qty: '1',
-        },
-      ],
+      tableData: [],
     }
   },
   computed: {
-    priceAll() {
-      return this.tableData.reduce(function (accumulator, currentValue) {
-        return accumulator + currentValue.price * currentValue.qty
-      }, 0)
+    ...mapGetters('products', {
+      productById: 'byId',
+      isLoading: 'isLoading',
+    }),
+    ...mapState([
+      'route', // vuex-router-sync
+    ]),
+  },
+  methods: {
+    ...mapActions('products', {
+      fetchProduct: 'fetchSingle',
+    }),
+    async OnSelectItem(item) {
+      try {
+        const product = await this.$axios.$get(
+          `https://tasi-backend.azurewebsites.net/api/products/${item}`
+        )
+        console.log(product)
+        console.log(this.tableData)
+        const a = this.tableData.find(
+          (elem) => elem.barcode === product.data.barcode
+        )
+        console.log(a)
+        if (
+          this.tableData.some((elem) => elem.barcode === product.data.barcode)
+        ) {
+          a.qty += 1
+        } else {
+          this.tableData = [...this.tableData, { ...product.data, qty: 1 }]
+        }
+      } catch {
+        this.$message({
+          message: 'Gagal mengambil detail produk.',
+          type: 'warning',
+        })
+      }
     },
   },
 }
 </script>
 
-<style></style>
+<style>
+.products-card .el-card__body {
+  height: calc(100% - 2em);
+  padding: 0em;
+}
+.order__card .el-card__body {
+  height: calc(100% - 2em);
+  padding-bottom: 1em;
+}
+</style>
