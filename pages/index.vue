@@ -58,26 +58,23 @@
     </el-row>
     <h3>Laporan</h3>
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="12">
         <nuxt-link to="report/items">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
-              <span class="head"> Laporan Barang</span>
+              <span class="head">Laporan Barang</span>
               <div class="body">
-                <p>
-                  Laporan transaksi barang<br />
-                  dari supplier dan gudang.
-                </p>
+                <p>Laporan transaksi barang dari supplier dan gudang.</p>
               </div>
             </div>
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col :xs="24" :sm="24" :lg="12">
         <nuxt-link to="report/manufacture">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
-              <span class="head"> Laporan Manufaktur</span>
+              <span class="head">Laporan Manufaktur</span>
               <div class="body">
                 <p>Laporan data hasil manufaktur barang.</p>
               </div>
@@ -85,12 +82,16 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
-        <nuxt-link to="report/stocks">
+    </el-row>
+    <el-row :gutter="20">
+      <el-col :xs="24" :sm="24" :lg="24">
+        <nuxt-link to="report/transactions">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
-              <span class="head"> Laporan Stok</span>
-              <div class="body"><p>Laporan stok barang pada gudang.</p></div>
+              <span class="head">Laporan Transaski</span>
+              <div class="body">
+                <p>Laporan transaksi supplier dan penjualan.</p>
+              </div>
             </div>
           </el-button>
         </nuxt-link>

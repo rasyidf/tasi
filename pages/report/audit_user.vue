@@ -1,7 +1,51 @@
 <template>
-  <div class="main_content"></div>
+  <div class="main_content">
+    <el-card class="p-0">
+      <data-tables
+        :data="users"
+        :filters="filters"
+        :loading="isLoading"
+        layout="tool, table, pagination"
+      >
+        <el-table-column label="Id">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.userId }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Nama">
+          <template slot-scope="scope">
+            {{ scope.row.fullName }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Nama pengguna">
+          <template slot-scope="scope">
+            {{ scope.row.username }}
+          </template>
+        </el-table-column>
+        <el-table-column label="Wewenang">
+          <template slot-scope="scope">
+            <el-tag size="medium">{{ scope.row.role }}</el-tag>
+          </template>
+        </el-table-column>
+      </data-tables>
+    </el-card>
+  </div>
 </template>
 
 <script>
-export default {}
+import { mapGetters, mapState } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters('users', {
+      users: 'list',
+      isLoading: 'isLoading',
+    }),
+    ...mapState([
+      'route', // vuex-router-sync
+    ]),
+  },
+  async created() {
+    await this.$store.dispatch('users/fetchList')
+  },
+}
 </script>
