@@ -6,7 +6,7 @@
       :loading="isLoading"
       layout="table"
     >
-      <el-table-column label="Tanggal" width="200">
+      <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
@@ -55,8 +55,6 @@ export default {
       addDrawerShow: false,
       drawerShow: false,
       editDrawerShow: false,
-      query: '',
-      filters: [{ prop: 'name', value: this.query }],
     }
   },
   computed: {
@@ -79,35 +77,8 @@ export default {
     OnCompleted() {
       this.$refs.drawer.closeDrawer()
     },
-    queryChanged(value) {
-      this.filters = [{ prop: 'name', value }]
-    },
-    ActivateDrawer(key) {
-      if (key === 'add') {
-        this.editDrawerShow = false
-        this.addDrawerShow = true
-      } else if (key === 'edit') {
-        this.editDrawerShow = true
-        this.addDrawerShow = false
-      }
-      this.drawerShow = true
-    },
     fetchData() {
       return this.fetchArticles()
-    },
-    handleEdit(index, row) {
-      this.selectedIndex = index
-      this.ActivateDrawer('edit')
-    },
-    handleDelete(index, row) {
-      this.deleteProduct({ id: index + 1 })
-      this.$message({
-        message: 'Produk berhasil di hapus.',
-        type: 'success',
-      })
-    },
-    handleAdd() {
-      this.ActivateDrawer('add')
     },
   },
 }

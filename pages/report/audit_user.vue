@@ -6,6 +6,12 @@
       :loading="isLoading"
       layout="table"
     >
+      <el-table-column label="Terakhir Diubah" width="250">
+        <template slot-scope="scope">
+          <i class="el-icon-time"></i>
+          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="Id">
         <template slot-scope="scope">
           <span style="margin-left: 10px">{{ scope.row.userId }}</span>

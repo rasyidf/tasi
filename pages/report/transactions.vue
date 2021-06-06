@@ -8,14 +8,11 @@
     >
       <template #tool>
         <div>
-          <el-row style="margin: 1em" class="noprint">
+          <el-row style="margin: 1em" class="no-print">
             <el-col span="8">
               <el-radio-group v-model="mode" @change="queryChanged(mode)">
                 <el-radio-button label="Supplier" name="mode"></el-radio-button>
-                <el-radio-button
-                  label="Pelanggan"
-                  name="mode"
-                ></el-radio-button>
+                <el-radio-button label="Sales" name="mode"></el-radio-button>
               </el-radio-group>
             </el-col>
             <el-col span="8"></el-col>
@@ -23,8 +20,9 @@
           </el-row>
         </div>
       </template>
-      <el-table-column label="Tanggal Dibuat">
+      <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
+          <i class="el-icon-time"></i>
           <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
         </template>
       </el-table-column>
