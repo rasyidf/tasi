@@ -58,7 +58,7 @@
     </el-row>
     <h3>Laporan</h3>
     <el-row v-if="isSuperAdmin" :gutter="20">
-      <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="report/items">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
@@ -70,7 +70,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="12">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="report/manufacture">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
@@ -82,9 +82,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :lg="24">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="report/transactions">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
@@ -97,7 +95,6 @@
         </nuxt-link>
       </el-col>
     </el-row>
-    <h3></h3>
     <el-row v-if="isSuperAdmin" :gutter="20">
       <el-col :xs="24" :sm="12">
         <nuxt-link to="report/audit_user">

@@ -23,7 +23,9 @@
       <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.modifiedDate | formatDate
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Tipe" hidden>
@@ -31,9 +33,19 @@
           <el-tag size="medium">{{ scope.row.type }}</el-tag>
         </template>
       </el-table-column>
+      <el-table-column label="PIC" hidden>
+        <template slot-scope="scope">
+          <span size="medium">{{ scope.row.userFullname }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="Supplier" hidden>
+        <template slot-scope="scope">
+          <span size="medium">{{ scope.row.supplierName }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="Harga">
         <template slot-scope="scope">
-          <span size="medium">{{ scope.row.totalSales }}</span>
+          <span size="medium">{{ scope.row.totalSales | formatCurrency }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Berat">
@@ -43,12 +55,12 @@
       </el-table-column>
       <el-table-column label="Pajak">
         <template slot-scope="scope">
-          <span size="medium">{{ scope.row.totalTax }}</span>
+          <span size="medium">{{ scope.row.totalTax | formatCurrency }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Total">
         <template slot-scope="scope">
-          <span size="medium">{{ scope.row.subTotal }}</span>
+          <span size="medium">{{ scope.row.subTotal | formatCurrency }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status Terakhir">

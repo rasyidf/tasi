@@ -9,7 +9,9 @@
       <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.modifiedDate | formatDate
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Barcode" width="130">
@@ -29,7 +31,7 @@
       </el-table-column>
       <el-table-column label="Harga">
         <template slot-scope="scope">
-          {{ scope.row.price }}
+          {{ scope.row.price | formatCurrency }}
         </template>
       </el-table-column>
       <el-table-column label="Stok">

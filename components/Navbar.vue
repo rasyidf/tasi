@@ -26,10 +26,10 @@
         <el-menu-item index="/report/manufacture"
           >Transaksi Manufaktur</el-menu-item
         >
-        <el-menu-item index="/report/transactions">Transactions</el-menu-item>
-        <el-menu-item index="/report/audit_user">Audit Pengguna</el-menu-item>
+        <el-menu-item index="/report/transactions">Transaksi</el-menu-item>
+        <el-menu-item index="/report/audit_user">Laporan Pengguna</el-menu-item>
         <el-menu-item index="/report/audit_supplier"
-          >Audit Supplier</el-menu-item
+          >Laporan Supplier</el-menu-item
         >
       </el-submenu>
       <el-menu-item index="/about">Tentang</el-menu-item>
