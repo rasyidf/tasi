@@ -69,9 +69,9 @@ export default {
         canManufacture: true,
         modifiedDate: '',
         name: '',
-        price: 1000,
+        price: 0,
         unit: '',
-        weight: 0.04,
+        weight: 0.01,
       },
       rules: {
         barcode: [

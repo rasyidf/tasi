@@ -9,24 +9,24 @@
       @select="menuSelect"
     >
       <el-menu-item index="/">Beranda</el-menu-item>
-      <el-submenu index="/manage">
+      <el-submenu v-if="isSuperAdmin" index="/manage">
         <template slot="title">Manajemen</template>
         <el-menu-item index="/manage/items">Barang</el-menu-item>
         <el-menu-item index="/manage/suppliers">Supplier</el-menu-item>
         <el-menu-item index="/manage/users">Pengguna</el-menu-item>
       </el-submenu>
-      <el-submenu index="/ops">
+      <el-submenu v-if="isSuperAdmin" index="/ops">
         <template slot="title">Operasional</template>
         <el-menu-item index="/ops/orders">Pesanan</el-menu-item>
         <el-menu-item index="/ops/manufacture">Manufaktur</el-menu-item>
       </el-submenu>
-      <el-submenu index="/report">
+      <el-submenu v-if="isSuperAdmin" index="/report">
         <template slot="title">Laporan</template>
         <el-menu-item index="/report/items">Transaksi Barang</el-menu-item>
         <el-menu-item index="/report/manufacture"
           >Transaksi Manufaktur</el-menu-item
         >
-        <el-menu-item index="/report/stocks">Stok Barang</el-menu-item>
+        <el-menu-item index="/report/transactions">Transactions</el-menu-item>
         <el-menu-item index="/report/audit_user">Audit Pengguna</el-menu-item>
         <el-menu-item index="/report/audit_supplier"
           >Audit Supplier</el-menu-item
@@ -40,9 +40,6 @@
           <el-avatar icon="el-icon-user-solid" size="medium"></el-avatar>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item command="profile" icon="el-icon-user"
-            ><span>Profil</span></el-dropdown-item
-          >
           <el-dropdown-item command="logout" icon="el-icon-arrow-left"
             ><span>Log Out</span></el-dropdown-item
           >
@@ -54,6 +51,11 @@
 
 <script>
 export default {
+  computed: {
+    isSuperAdmin() {
+      return this.$store.state.auth.user.role === 'SuperAdmin'
+    },
+  },
   methods: {
     menuSelect(index) {
       this.$router.push({
