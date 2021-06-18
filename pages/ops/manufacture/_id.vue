@@ -7,11 +7,11 @@
             <span>Detail Manufaktur</span>
           </div>
           <el-row>
-            <el-col :span="12">Hasil Yang Diharapkan</el-col>
+            <el-col :span="12">Hasil yang Direncanakan</el-col>
             <el-col :span="12">{{ data.expectedProduce }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">Hasil Yang Didapat</el-col>
+            <el-col :span="12">Hasil yang Final</el-col>
             <el-col :span="12">{{ data.finalProduce }}</el-col>
           </el-row>
           <el-divider
@@ -20,11 +20,13 @@
           ></el-divider>
           <el-row>
             <el-col :span="12">Tanggal Diubah</el-col>
-            <el-col :span="12">{{ data.modifiedDate }}</el-col>
+            <el-col :span="12">{{ data.modifiedDate | formatDate }}</el-col>
           </el-row>
           <el-row>
             <el-col :span="12">Tanggal Estimasi Selesai</el-col>
-            <el-col :span="12">{{ data.expectedCompletion }}</el-col>
+            <el-col :span="12">{{
+              data.expectedCompletion | formatDate
+            }}</el-col>
           </el-row>
         </el-card>
         <el-card
@@ -40,17 +42,9 @@
             :loading="$fetchState.pending"
             layout="table"
           >
-            <el-table-column label="Tanggal" width="200">
-              <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{
-                  scope.row.modifiedDate
-                }}</span>
-              </template>
-            </el-table-column>
             <el-table-column label="Nama">
               <template slot-scope="scope">
-                {{ getProductById(scope.row.productId) }}
+                {{ scope.row.productName }}
               </template>
             </el-table-column>
             <el-table-column label="Jumlah">
@@ -71,7 +65,7 @@
               v-for="item in data.statusHistory"
               :key="item.manufactureStatusId"
               :type="getColorInID(item.code)"
-              :timestamp="item.modifiedDate"
+              :timestamp="item.modifiedDate | formatDate"
               placement="top"
               size="normal"
             >

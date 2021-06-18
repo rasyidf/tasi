@@ -10,20 +10,22 @@
             >
           </div>
           <el-row>
-            <el-col :span="12">Sales</el-col>
-            <el-col :span="12">{{ data.totalSales }}</el-col>
+            <el-col :span="12">Penjualan</el-col>
+            <el-col :span="12">{{ data.totalSales | formatCurrency }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">Shipping</el-col>
-            <el-col :span="12">{{ data.totalShipping }}</el-col>
+            <el-col :span="12">Ongkos kirim</el-col>
+            <el-col :span="12">{{
+              data.totalShipping | formatCurrency
+            }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">Weight</el-col>
-            <el-col :span="12">{{ data.totalWeight }}</el-col>
+            <el-col :span="12">Berat</el-col>
+            <el-col :span="12">{{ data.totalWeight | formatCurrency }}</el-col>
           </el-row>
           <el-row>
-            <el-col :span="12">Tax</el-col>
-            <el-col :span="12">{{ data.totalTax }}</el-col>
+            <el-col :span="12">Pajak</el-col>
+            <el-col :span="12">{{ data.totalTax | formatCurrency }}</el-col>
           </el-row>
           <el-divider
             direction="horizontal"
@@ -31,7 +33,7 @@
           ></el-divider>
           <el-row>
             <el-col :span="12">Total</el-col>
-            <el-col :span="12">{{ data.subTotal }}</el-col>
+            <el-col :span="12">{{ data.subTotal | formatCurrency }}</el-col>
           </el-row>
         </el-card>
         <el-card
@@ -43,17 +45,9 @@
             <span>Details</span>
           </div>
           <data-tables :data="data.orderDetails" layout="table">
-            <el-table-column label="Tanggal" width="200">
-              <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{
-                  scope.row.modifiedDate
-                }}</span>
-              </template>
-            </el-table-column>
             <el-table-column label="Nama">
               <template slot-scope="scope">
-                {{ getProductById(scope.row.productId) }}
+                {{ scope.row.productName }}
               </template>
             </el-table-column>
             <el-table-column label="Jumlah">
@@ -63,12 +57,12 @@
             </el-table-column>
             <el-table-column label="Harga Unit">
               <template slot-scope="scope">
-                {{ scope.row.unitPrice }}
+                {{ scope.row.unitPrice | formatCurrency }}
               </template>
             </el-table-column>
             <el-table-column label="Harga Total">
               <template slot-scope="scope">
-                {{ scope.row.totalPrice }}
+                {{ scope.row.totalPrice | formatCurrency }}
               </template>
             </el-table-column>
           </data-tables>
@@ -84,7 +78,7 @@
               v-for="item in data.statusHistory"
               :key="item.orderStatusHistoryId"
               :type="getColorInID(item.code)"
-              :timestamp="item.modifiedDate"
+              :timestamp="item.modifiedDate | formatDate"
               placement="top"
               size="normal"
             >
@@ -113,7 +107,6 @@ export default {
     )
     const products = {}
     const order = data.data
-    console.log(order)
     if (order.orderDetails) {
       order.orderDetails.forEach(async (el) => {
         if (!(el.productId in products)) {

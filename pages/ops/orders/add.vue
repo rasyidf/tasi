@@ -27,6 +27,11 @@
                     <el-tag> Rp. {{ scope.row.price }}</el-tag>
                   </template>
                 </el-table-column>
+                <el-table-column label="Stok">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.stock }}</span>
+                  </template>
+                </el-table-column>
                 <el-table-column prop="qty" label="Quantity">
                   <template slot-scope="scope">
                     <el-input-number

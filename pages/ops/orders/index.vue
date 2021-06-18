@@ -16,7 +16,9 @@
         </template>
         <el-table-column label="Tanggal Dibuat">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+            <span style="margin-left: 10px">{{
+              scope.row.modifiedDate | formatDate
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Tipe">
@@ -24,9 +26,19 @@
             <el-tag size="medium">{{ scope.row.type }}</el-tag>
           </template>
         </el-table-column>
+        <el-table-column label="PIC">
+          <template slot-scope="scope">
+            <span>{{ scope.row.userFullname }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Supplier">
+          <template slot-scope="scope">
+            <span>{{ scope.row.supplierName }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="Harga">
           <template slot-scope="scope">
-            <span size="medium">{{ scope.row.subTotal }}</span>
+            <span size="medium">{{ scope.row.subTotal | formatCurrency }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Status Terakhir">
@@ -59,7 +71,7 @@
               cancel-button-text="Tidak"
               icon="el-icon-info"
               icon-color="red"
-              title="Apakah Anda yakin akan mereject transaksi ini"
+              title="Apakah Anda yakin akan membatalkan transaksi ini"
               @confirm="handleDelete(scope.$index, scope.row)"
             >
               <el-button
@@ -67,7 +79,7 @@
                 size="mini"
                 icon="el-icon-close"
                 type="danger"
-                >Tolak</el-button
+                >Batal</el-button
               >
             </el-popconfirm>
           </template>
@@ -90,16 +102,16 @@
 import { mapGetters, mapState, mapActions } from 'vuex'
 import Toolbar from '../../../components/Toolbar.vue'
 const code = {
-  0: 'Pesanan disimpan dan menunggu diproses.',
+  0: 'Pesanan disimpan dan menunggu diproses',
   1: 'Pesanan sedang di proses',
   2: 'Pesanan dalam pengiriman',
-  3: 'Pesanan Selesai',
-  4: 'Pesanan Dibatalkan',
+  3: 'Pesanan selesai',
+  4: 'Pesanan dibatalkan',
 }
 const order = {
   Requested: 0,
   InProcess: 1,
-  Deliver: 2,
+  Delivery: 2,
   Completed: 3,
   Cancelled: 4,
 }
@@ -242,6 +254,7 @@ export default {
             type: 'success',
           })
         }
+        this.fetchData()
       } catch (er) {
         this.$message({
           message: er.message,

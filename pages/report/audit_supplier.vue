@@ -9,20 +9,25 @@
       <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.modifiedDate | formatDate
+          }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Name">
+      <el-table-column label="Nama Supplier">
         <template slot-scope="scope">
           {{ scope.row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="Address">
+      <el-table-column label="Alamat">
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="bottom">
             {{ scope.row.latitude }}, {{ scope.row.longitude }}
             <div slot="reference" class="name-wrapper">
-              <span> {{ scope.row.address }}</span>
+              <span>
+                {{ scope.row.address }} ({{ scope.row.latitude }},
+                {{ scope.row.longitude }})</span
+              >
             </div>
           </el-popover>
         </template>

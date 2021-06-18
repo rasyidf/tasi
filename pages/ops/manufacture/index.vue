@@ -16,24 +16,26 @@
         </template>
         <el-table-column label="Tanggal Dibuat">
           <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+            <span style="margin-left: 10px">{{
+              scope.row.modifiedDate | formatDate
+            }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Tanggal Selesai">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{
-              scope.row.expectedCompletion
+              scope.row.expectedCompletion | formatDate
             }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Produk">
           <template slot-scope="scope">
-            <el-tag size="medium">{{ scope.row.productId }}</el-tag>
+            <span size="medium">{{ scope.row.productName }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Direncanakan">
           <template slot-scope="scope">
-            <el-tag size="medium">{{ scope.row.expectedProduce }}</el-tag>
+            <span>{{ scope.row.expectedProduce }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Diproduksi">
@@ -104,7 +106,7 @@ import Toolbar from '../../../components/Toolbar.vue'
 const code = {
   0: 'Produksi diantrekan.',
   1: 'Produksi sedang dalam proses',
-  2: 'Produksi Selesai',
+  2: 'Produksi selesai',
   3: 'Produksi Dibatalkan',
 }
 const order = {

@@ -9,7 +9,9 @@
       <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.modifiedDate | formatDate
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Id">

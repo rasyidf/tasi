@@ -4,7 +4,9 @@
       <el-table-column label="Terakhir Diubah" width="250">
         <template slot-scope="scope">
           <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.modifiedDate }}</span>
+          <span style="margin-left: 10px">{{
+            scope.row.modifiedDate | formatDate
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Dibuat">
@@ -17,14 +19,16 @@
           <span size="medium">{{ scope.row.expectedProduce }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Hasil Id">
+      <el-table-column label="Hasil">
         <template slot-scope="scope">
           <span size="medium">{{ scope.row.finalProduce }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Perkiraan Selesai">
         <template slot-scope="scope">
-          <span size="medium">{{ scope.row.expectedCompletion }}</span>
+          <span size="medium">{{
+            scope.row.expectedCompletion | formatDate
+          }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Status Terakhir">

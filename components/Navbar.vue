@@ -9,28 +9,51 @@
       @select="menuSelect"
     >
       <el-menu-item index="/">Beranda</el-menu-item>
-      <el-submenu v-if="isSuperAdmin" index="/manage">
+      <el-submenu v-if="isSuperAdmin || isSupervisor" index="/manage">
         <template slot="title">Manajemen</template>
         <el-menu-item index="/manage/items">Barang</el-menu-item>
         <el-menu-item index="/manage/suppliers">Supplier</el-menu-item>
-        <el-menu-item index="/manage/users">Pengguna</el-menu-item>
+        <el-menu-item v-if="isSuperAdmin" index="/manage/users">
+          Pengguna
+        </el-menu-item>
       </el-submenu>
-      <el-submenu v-if="isSuperAdmin" index="/ops">
+      <el-submenu index="/ops">
         <template slot="title">Operasional</template>
         <el-menu-item index="/ops/orders">Pesanan</el-menu-item>
-        <el-menu-item index="/ops/manufacture">Manufaktur</el-menu-item>
+        <el-menu-item
+          v-if="isSuperAdmin || isSupervisor"
+          index="/ops/manufacture"
+        >
+          Manufaktur
+        </el-menu-item>
       </el-submenu>
-      <el-submenu v-if="isSuperAdmin" index="/report">
+      <el-submenu index="/report">
         <template slot="title">Laporan</template>
-        <el-menu-item index="/report/items">Transaksi Barang</el-menu-item>
-        <el-menu-item index="/report/manufacture"
-          >Transaksi Manufaktur</el-menu-item
+        <el-menu-item
+          v-if="isSuperAdmin || isManager || isSupervisor"
+          index="/report/items"
         >
-        <el-menu-item index="/report/transactions">Transactions</el-menu-item>
-        <el-menu-item index="/report/audit_user">Audit Pengguna</el-menu-item>
-        <el-menu-item index="/report/audit_supplier"
-          >Audit Supplier</el-menu-item
+          Transaksi Barang
+        </el-menu-item>
+        <el-menu-item
+          v-if="isSuperAdmin || isManager || isSupervisor"
+          index="/report/manufacture"
         >
+          Transaksi Manufaktur
+        </el-menu-item>
+        <el-menu-item index="/report/transactions">Transaksi</el-menu-item>
+        <el-menu-item
+          v-if="isSuperAdmin || isManager || isSupervisor"
+          index="/report/audit_user"
+        >
+          Laporan Pengguna
+        </el-menu-item>
+        <el-menu-item
+          v-if="isSuperAdmin || isManager || isSupervisor"
+          index="/report/audit_supplier"
+        >
+          Laporan Supplier
+        </el-menu-item>
       </el-submenu>
       <el-menu-item index="/about">Tentang</el-menu-item>
     </el-menu>
@@ -54,6 +77,15 @@ export default {
   computed: {
     isSuperAdmin() {
       return this.$store.state.auth.user.role === 'SuperAdmin'
+    },
+    isSupervisor() {
+      return this.$store.state.auth.user.role === 'Supervisor'
+    },
+    isManager() {
+      return this.$store.state.auth.user.role === 'Manager'
+    },
+    isCustomer() {
+      return this.$store.state.auth.user.role === 'Customer'
     },
   },
   methods: {

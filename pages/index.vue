@@ -1,7 +1,12 @@
 <template>
   <el-main class="dashboard">
-    <h3 v-if="isSuperAdmin">Manajemen</h3>
-    <el-row v-if="isSuperAdmin" :gutter="20">
+    <h2>Halo, {{ $store.state.auth.user.fullName }}</h2>
+    <p>
+      Akses sebagai {{ $store.state.auth.user.role }}, waktu saat ini
+      {{ Date() | formatDate }}.
+    </p>
+    <h3 v-if="isSuperAdmin || isSupervisor">Manajemen</h3>
+    <el-row v-if="isSuperAdmin || isSupervisor" :gutter="20">
       <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="manage/items">
           <el-button icon="el-icon-takeaway-box">
@@ -22,7 +27,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="8">
+      <el-col v-if="isSuperAdmin" :xs="24" :sm="24" :lg="8">
         <nuxt-link to="manage/users">
           <el-button icon="el-icon-user">
             <div class="content">
@@ -35,7 +40,7 @@
     </el-row>
     <h3>Operasional</h3>
     <el-row :gutter="20">
-      <el-col :xs="24" :sm="12">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="ops/orders">
           <el-button icon="el-icon-shopping-cart-full">
             <div class="content">
@@ -45,7 +50,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col v-if="isSuperAdmin" :xs="24" :sm="12">
+      <el-col v-if="isSuperAdmin || isSupervisor" :xs="24" :sm="24" :lg="8">
         <nuxt-link to="ops/manufacture">
           <el-button icon="el-icon-box">
             <div class="content">
@@ -57,8 +62,13 @@
       </el-col>
     </el-row>
     <h3>Laporan</h3>
-    <el-row v-if="isSuperAdmin" :gutter="20">
-      <el-col :xs="24" :sm="24" :lg="12">
+    <el-row :gutter="20">
+      <el-col
+        v-if="isSuperAdmin || isManager || isSupervisor"
+        :xs="24"
+        :sm="24"
+        :lg="8"
+      >
         <nuxt-link to="report/items">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
@@ -70,7 +80,12 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="24" :lg="12">
+      <el-col
+        v-if="isSuperAdmin || isManager || isSupervisor"
+        :xs="24"
+        :sm="24"
+        :lg="8"
+      >
         <nuxt-link to="report/manufacture">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
@@ -82,9 +97,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-    </el-row>
-    <el-row :gutter="20">
-      <el-col :xs="24" :sm="24" :lg="24">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="report/transactions">
           <el-button icon="el-icon-notebook-2">
             <div class="content">
@@ -97,9 +110,8 @@
         </nuxt-link>
       </el-col>
     </el-row>
-    <h3></h3>
-    <el-row v-if="isSuperAdmin" :gutter="20">
-      <el-col :xs="24" :sm="12">
+    <el-row v-if="isSuperAdmin || isSupervisor || isManager" :gutter="20">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="report/audit_user">
           <el-button icon="el-icon-notebook-1">
             <div class="content">
@@ -111,7 +123,7 @@
           </el-button>
         </nuxt-link>
       </el-col>
-      <el-col :xs="24" :sm="12">
+      <el-col :xs="24" :sm="24" :lg="8">
         <nuxt-link to="report/audit_supplier">
           <el-button icon="el-icon-notebook-1">
             <div class="content">
@@ -131,6 +143,15 @@ export default {
   computed: {
     isSuperAdmin() {
       return this.$store.state.auth.user.role === 'SuperAdmin'
+    },
+    isSupervisor() {
+      return this.$store.state.auth.user.role === 'Supervisor'
+    },
+    isManager() {
+      return this.$store.state.auth.user.role === 'Manager'
+    },
+    isCustomer() {
+      return this.$store.state.auth.user.role === 'Customer'
     },
   },
 }

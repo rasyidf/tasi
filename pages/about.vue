@@ -1,10 +1,11 @@
 <template>
   <div>
-    <el-card style="paddings: 1em">
+    <el-card style="paddings: 2em">
       <img src="/icon.png" alt="tasi-logo" width="140em" height="140em" />
       <h1>Tentang TASI</h1>
       <p style="margin-top: 0.8em">
-        Aplikasi ini dibuat dalam rangka Tugas Akhir Sistem Informasi
+        Aplikasi manufaktur untuk memenuhi project akhir mata kuliah Sistem
+        Informasi.
       </p>
       <ul>
         <el-row>

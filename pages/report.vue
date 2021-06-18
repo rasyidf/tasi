@@ -17,7 +17,7 @@
         <el-row>
           <el-col span="8"> <p>Dicetak Tanggal</p></el-col>
           <el-col span="16">
-            <p>: {{ Date() }}</p></el-col
+            <p>: {{ Date() | formatDate }}</p></el-col
           >
         </el-row>
       </el-col>

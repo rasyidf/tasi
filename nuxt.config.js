@@ -18,7 +18,11 @@ export default {
   css: ['element-ui/lib/theme-chalk/index.css', '@/assets/css/main.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/element-ui', '@/plugins/vue-data-table'],
+  plugins: [
+    '@/plugins/element-ui',
+    '@/plugins/vue-data-table',
+    '~plugins/formatters.js',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
