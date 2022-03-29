@@ -161,7 +161,7 @@ export default {
       fetchProduct: 'fetchSingle',
     }),
     async onOrderClick() {
-      const url = 'https://tasi-backend.azurewebsites.net/api/manufacture'
+      const url = `${process.env.NUXT_ENV_API_URL}manufacture`
       const products = []
       if (this.tableData.length === 0) {
         this.$message({
@@ -189,19 +189,19 @@ export default {
     },
     async FetchUsers() {
       const users = await this.$axios.$get(
-        `https://tasi-backend.azurewebsites.net/api/users?role=3`
+        `${process.env.NUXT_ENV_API_URL}users?role=3`
       )
       this.users = users.data.data
     },
     async FetchSuppliers() {
       const suppliers = await this.$axios.$get(
-        `https://tasi-backend.azurewebsites.net/api/suppliers`
+        `${process.env.NUXT_ENV_API_URL}suppliers`
       )
       this.suppliers = suppliers.data.data
     },
     async FetchProducts() {
       const products = await this.$axios.$get(
-        `https://tasi-backend.azurewebsites.net/api/products`
+        `${process.env.NUXT_ENV_API_URL}products`
       )
       this.products = products.data.data.filter(
         (x) => x.canManufacture === true
@@ -214,7 +214,7 @@ export default {
     async OnSelectItem(item) {
       try {
         const product = await this.$axios.$get(
-          `https://tasi-backend.azurewebsites.net/api/products/${item}`
+          `${process.env.NUXT_ENV_API_URL}products/${item}`
         )
         const a = this.tableData.find(
           (elem) => elem.barcode === product.data.barcode

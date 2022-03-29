@@ -8,7 +8,7 @@
         <transition name="el-fade-in-linear"> <Nuxt /></transition>
       </el-main>
       <el-footer class="main-footer">
-        <span> Copyright &copy; 2021, UNPAK</span>
+        <span> Copyright &copy; 2021, UMY</span>
       </el-footer>
     </el-container>
   </el-container>

@@ -1,4 +1,7 @@
 export default {
+  env: {
+    baseUrl: process.env.NUXT_ENV_API_URL || 'http://localhost:5001/api/',
+  },
   config: {
     devtools: true,
   },
@@ -36,7 +39,9 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxtjs/auth-next'],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    credentials: true,
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -76,15 +81,14 @@ export default {
         },
         endpoints: {
           login: {
-            url: 'https://tasi-backend.azurewebsites.net/api/users/login',
+            url: `${process.env.NUXT_ENV_API_URL}users/login`,
             method: 'post',
           },
           user: {
-            url: 'https://tasi-backend.azurewebsites.net/api/users/profile/',
+            url: `${process.env.NUXT_ENV_API_URL}users/profile/`,
             method: 'get',
           },
           logout: false,
-
           home: '/',
         },
       },

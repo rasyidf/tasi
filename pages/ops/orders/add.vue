@@ -162,7 +162,7 @@ export default {
       fetchProduct: 'fetchSingle',
     }),
     getOrderUrl() {
-      const base = 'https://tasi-backend.azurewebsites.net/api/orders'
+      const base = `${process.env.NUXT_ENV_API_URL}orders`
       if (this.ruleForm.mode === 'Supplier') {
         return `${base}/supplier`
       } else {
@@ -207,13 +207,13 @@ export default {
     },
     async FetchUsers() {
       const users = await this.$axios.$get(
-        `https://tasi-backend.azurewebsites.net/api/users?role=3`
+        `${process.env.NUXT_ENV_API_URL}users?role=3`
       )
       this.users = users.data.data
     },
     async FetchSuppliers() {
       const suppliers = await this.$axios.$get(
-        `https://tasi-backend.azurewebsites.net/api/suppliers`
+        `${process.env.NUXT_ENV_API_URL}suppliers`
       )
       this.suppliers = suppliers.data.data
     },
@@ -224,7 +224,7 @@ export default {
     async OnSelectItem(item) {
       try {
         const product = await this.$axios.$get(
-          `https://tasi-backend.azurewebsites.net/api/products/${item}`
+          `${process.env.NUXT_ENV_API_URL}products/${item}`
         )
         const a = this.tableData.find(
           (elem) => elem.barcode === product.data.barcode

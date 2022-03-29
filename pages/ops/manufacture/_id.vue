@@ -90,7 +90,7 @@ export default {
   async asyncData({ params, $axios }) {
     const slug = params.id // Ketika memanggil /abc maka slug akan menjadi "abc"
     const data = await $axios.$get(
-      `https://tasi-backend.azurewebsites.net/api/manufacture/${slug}`
+      `${process.env.NUXT_ENV_API_URL}manufacture/${slug}`
     )
     const order = data.data
     return { slug, data: order }
@@ -105,7 +105,7 @@ export default {
         if (!(el.productId in products)) {
           try {
             const pd = await this.$axios.$get(
-              `https://tasi-backend.azurewebsites.net/api/products/${el.productId}`
+              `${process.env.NUXT_ENV_API_URL}products/${el.productId}`
             )
             products[el.productId] = pd.data
           } catch {

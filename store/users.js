@@ -16,7 +16,7 @@ client.interceptors.request.use(
 
 const crudModule = createCRUDModule({
   resource: 'users',
-  urlRoot: 'https://tasi-backend.azurewebsites.net/api/users',
+  urlRoot: `${process.env.NUXT_ENV_API_URL}users`,
   idAttribute: 'userId',
   parseList(res) {
     const data = res.data.data.data

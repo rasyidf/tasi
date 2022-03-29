@@ -149,7 +149,7 @@ export default {
     }),
     async GetLocationAsync() {
       const location = await this.$axios.$get(
-        'https://tasi-backend.azurewebsites.net/api/maps/lookup',
+        `${process.env.NUXT_ENV_API_URL}maps/lookup`,
         { params: { address: this.ruleForm.address } }
       )
 

@@ -40,11 +40,11 @@ const actions = {
     }
 
     commit('setOrderIsLoading', true)
-    let url = `${process.env.VUE_APP_API_URL}orders?page=${page}`
+    let url = `${process.env.NUXT_ENV_API_URL}orders?page=${page}`
     if (search === null) {
       url = `${url}?page=${page}`
     } else {
-      url = `${process.env.VUE_APP_API_URL}orders/view/search?search=${search}&page=${page}`
+      url = `${process.env.NUXT_ENV_API_URL}orders/view/search?search=${search}&page=${page}`
     }
 
     await axios
@@ -71,7 +71,7 @@ const actions = {
   async fetchDetailOrder({ commit }, id) {
     commit('setOrderIsLoading', true)
     await axios
-      .get(`${process.env.VUE_APP_API_URL}orders/${id}`)
+      .get(`${process.env.NUXT_ENV_API_URL}orders/${id}`)
       .then((res) => {
         commit('setOrderDetail', res.data.data)
         commit('setOrderIsLoading', false)
@@ -85,7 +85,7 @@ const actions = {
   async storeOrder({ commit }, order) {
     commit('setOrderIsCreating', true)
     await axios
-      .post(`${process.env.VUE_APP_API_URL}orders`, order)
+      .post(`${process.env.NUXT_ENV_API_URL}orders`, order)
       .then((res) => {
         commit('saveNewOrders', res.data.data)
         commit('setOrderIsCreating', false)
@@ -101,7 +101,7 @@ const actions = {
     commit('setOrderIsUpdating', true)
     await axios
       .post(
-        `${process.env.VUE_APP_API_URL}orders/${order.id}?_method=PUT`,
+        `${process.env.NUXT_ENV_API_URL}orders/${order.id}?_method=PUT`,
         order
       )
       .then((res) => {
@@ -117,7 +117,7 @@ const actions = {
   async deleteOrder({ commit }, id) {
     commit('setOrderIsDeleting', true)
     await axios
-      .delete(`${process.env.VUE_APP_API_URL}orders/${id}`)
+      .delete(`${process.env.NUXT_ENV_API_URL}orders/${id}`)
       .then((res) => {
         commit('setDeleteOrder', res.data.data.id)
         commit('setOrderIsDeleting', false)

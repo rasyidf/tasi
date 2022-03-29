@@ -224,7 +224,7 @@ export default {
     },
     async loadData(queryInfo) {
       const data = await this.$axios.$get(
-        `https://tasi-backend.azurewebsites.net/api/orders`
+        `${process.env.NUXT_ENV_API_URL}orders`
       )
       this.data = data.data.data
       this.total = data.data.totalPages
@@ -235,7 +235,7 @@ export default {
         const codes = order[row.lastStatus.code] + 1
         if (codes > 3) return
         const proses = await this.$axios.$post(
-          `https://tasi-backend.azurewebsites.net/api/orders/${row.orderId}/process`,
+          `${process.env.NUXT_ENV_API_URL}orders/${row.orderId}/process`,
           { code: codes, message: code[codes] }
         )
         if (proses) {
@@ -255,7 +255,7 @@ export default {
     async handleDelete(index, row) {
       try {
         const hapus = await this.$axios.$post(
-          `https://tasi-backend.azurewebsites.net/api/orders/${row.orderId}/process`,
+          `${process.env.NUXT_ENV_API_URL}orders/${row.orderId}/process`,
           { code: 4, message: code[4] }
         )
         if (hapus.data) {
