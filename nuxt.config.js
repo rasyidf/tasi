@@ -1,6 +1,6 @@
 export default {
   env: {
-    baseUrl: process.env.NUXT_ENV_API_URL || 'http://localhost:5001/api/',
+    baseUrl: process.env.NUXT_ENV_API_URL || 'http://localhost:5000/api/',
   },
   config: {
     devtools: true,
